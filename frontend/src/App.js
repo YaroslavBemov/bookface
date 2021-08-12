@@ -1,14 +1,28 @@
 import './App.css'
-import Message from './components/Message'
+import MessageList from './components/MessageList'
+import { useState } from 'react'
 
 function App () {
-  const sender = 'Kram Toille Grebrekcuz'
-  const message = 'Hello from Message component!'
-  const props = {from: sender, text: message}
+  const [messageList, setMessageList] = useState([
+    {
+      from: 'Alex',
+      text: 'Hello, Monica!'
+    },
+    {
+      from: 'Monica', text: 'Hi, Alex!)'
+    },
+    {
+      from: 'Alex',
+      text: 'Hello, Monica!'
+    },
+    {
+      from: 'Monica', text: 'Hi, Alex!)'
+    }
+  ])
 
   return (
     <div className="App">
-      <Message {...props}/>
+      <MessageList list={messageList}/>
     </div>
   )
 }
