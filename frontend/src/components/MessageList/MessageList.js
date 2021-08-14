@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useState } from 'react'
 import Message from '../Message'
 import styles from './Message-list.module.css'
 import Button from '../Button'
@@ -25,11 +25,13 @@ function MessageList({list, setList}) {
 
   return (
     <>
-      <div className={styles.messageList}>
-        {list.length === 0 && <div>No messages</div>}
-        {list.map(message => (
-          <Message {...message}/>
-        ))}
+      <div className={styles.container}>
+        <div className={styles.messageList}>
+          {list.length === 0 && <div>No messages</div>}
+          {list.map(message => (
+            <Message {...message}/>
+          ))}
+        </div>
 
         <div className={styles.input}>
           <InputText
