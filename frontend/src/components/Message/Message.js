@@ -3,7 +3,7 @@ import styles from './Message.module.css'
 import classNames from 'classnames'
 
 const Message = ({from = 'Anonymous', text = 'No message'}) => {
-  const align = from === 'Monica' ? styles.mla : null
+  const align = from === 'Anonymous' ? styles.mla : null
   const messageStyles = classNames(styles.message, align)
 
   return (
