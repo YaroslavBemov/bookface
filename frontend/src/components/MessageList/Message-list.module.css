@@ -1,11 +1,15 @@
-.messageList {
+.container {
   width: 100%;
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-end;
+}
+
+.messageList {
+  max-height: 100%;
   overflow-y: auto;
-  scrollbar-width: none;
+  /*scrollbar-width: none;*/
 }
 
 .messageList::-webkit-scrollbar {
