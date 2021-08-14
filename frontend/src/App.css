@@ -1,11 +1,6 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 .App {
-  height: 100vh;
-  padding-left: calc(50% - 590px);
-  padding-right: calc(50% - 590px);
+  height: 100%;
+  padding-left: calc(50% - 390px);
+  padding-right: calc(50% - 390px);
+  background-color: #1a237e;
 }
