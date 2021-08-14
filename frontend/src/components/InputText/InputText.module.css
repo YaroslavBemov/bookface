@@ -1,0 +1,12 @@
+.input {
+  padding-left: 5px;
+  border: none;
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+  background-color: #283593;
+  color: #bbdefb;
+}
+
+.input:active, .input:focus {
+  outline: none;
+}
