@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Message from '../Message'
 import styles from './Message-list.module.css'
 import Button from '../Button'
@@ -7,6 +7,17 @@ import InputText from '../InputText'
 function MessageList({list, setList}) {
   const [inputText, setInputText] = useState({})
   const [isDisabled, setIsDisabled] = useState(true)
+
+  const scrollTo = useRef()
+
+  useEffect(() => {
+    const target = scrollTo.current
+    target.scrollIntoView({
+      block: 'end',
+      behavior: 'smooth'
+    })
+
+  }, [list])
 
   const handleChange = (e) => {
     setInputText({text: e.target.value})
@@ -31,6 +42,7 @@ function MessageList({list, setList}) {
           {list.map(message => (
             <Message {...message}/>
           ))}
+          <div ref={scrollTo} />
         </div>
 
         <div className={styles.input}>
