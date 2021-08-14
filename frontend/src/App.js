@@ -9,20 +9,26 @@ function App() {
       text: 'Hello, Monica!'
     },
     {
-      from: 'Monica', text: 'Hi, Alex!)'
+      from: 'Monica',
+      text: 'Hi, Alex!)'
     },
     {
       from: 'Alex',
-      text: 'Hello, Monica!'
+      text: 'Happy to see you!'
     },
     {
-      from: 'Monica', text: 'Hi, Alex!)'
+      from: 'Alex',
+      text: 'How are you?'
+    },
+    {
+      from: 'Monica',
+      text: 'I\'m fine, thx!'
     }
   ])
 
   return (
     <div className="App">
-      <MessageList list={ messageList } setList={ setMessageList }/>
+      <MessageList list={messageList} setList={setMessageList}/>
     </div>
   )
 }
