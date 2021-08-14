@@ -1,0 +1,14 @@
+.button {
+  border: none;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+  background-color: #304ffe;
+  color: #bbdefb;
+  cursor: pointer;
+}
+
+.button:disabled {
+  background-color: #283593;
+  color: #283593;
+  cursor: not-allowed;
+}
