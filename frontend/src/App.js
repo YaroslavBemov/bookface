@@ -10,7 +10,7 @@ function App() {
     },
     {
       from: 'Monica',
-      text: 'Hi, Alex!)'
+      text: 'Hi, Alex!)sdddddddddddddddddddddd ddddddddddddddddddddd ddddddddd dddddddddddddddd ddddddddddd ddddddddd'
     },
     {
       from: 'Alex',
@@ -18,7 +18,7 @@ function App() {
     },
     {
       from: 'Alex',
-      text: 'How are you?'
+      text: 'How are you?sddddddddddddddddddd ddddddddddddddddddddd dddddddddddddd dddddddddddddddddd dddddddddddddddd'
     },
     {
       from: 'Monica',
