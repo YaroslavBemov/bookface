@@ -5,7 +5,10 @@ import Button from '../Button'
 import InputText from '../InputText'
 
 function MessageList({list, setList}) {
-  const [inputText, setInputText] = useState({})
+  const [inputText, setInputText] = useState({
+    from: '',
+    text: ''
+  })
   const [isDisabled, setIsDisabled] = useState(true)
 
   const scrollTo = useRef()
@@ -17,10 +20,30 @@ function MessageList({list, setList}) {
       behavior: 'smooth'
     })
 
+    setTimeout(() => {
+      console.log(list)
+
+      if (list.length > 0) {
+        const author = list[list.length - 1].from
+        const text = list[list.length - 1].text
+        console.log(author)
+
+        if (author === 'Anonymous') {
+          setList(prev => [...prev, {
+            from: 'Bot',
+            text: `You send "${text}".`
+          }])
+        }
+      }
+    }, 1000)
+
   }, [list])
 
   const handleChange = (e) => {
-    setInputText({text: e.target.value})
+    setInputText({
+      from: 'Anonymous',
+      text: e.target.value
+    })
     setIsDisabled(e.target.value === '')
   }
   const handleKeyPress = (e) => {
@@ -33,7 +56,7 @@ function MessageList({list, setList}) {
     setInputText({text: ''})
     setIsDisabled(true)
   }
-
+//todo add button scroll to bottom
   return (
     <>
       <div className={styles.container}>
@@ -42,7 +65,7 @@ function MessageList({list, setList}) {
           {list.map(message => (
             <Message {...message}/>
           ))}
-          <div ref={scrollTo} />
+          <div ref={scrollTo}/>
         </div>
 
         <div className={styles.input}>

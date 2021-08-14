@@ -4,26 +4,26 @@ import { useState } from 'react'
 
 function App() {
   const [messageList, setMessageList] = useState([
-    {
-      from: 'Alex',
-      text: 'Hello, Monica!'
-    },
-    {
-      from: 'Monica',
-      text: 'Hi, Alex!)'
-    },
-    {
-      from: 'Alex',
-      text: 'Happy to see you!'
-    },
-    {
-      from: 'Alex',
-      text: 'How are you?'
-    },
-    {
-      from: 'Monica',
-      text: 'I\'m fine, thx!'
-    }
+    // {
+    //   from: 'Alex',
+    //   text: 'Hello, Monica!'
+    // },
+    // {
+    //   from: 'Monica',
+    //   text: 'Hi, Alex!)'
+    // },
+    // {
+    //   from: 'Alex',
+    //   text: 'Happy to see you!'
+    // },
+    // {
+    //   from: 'Alex',
+    //   text: 'How are you?'
+    // },
+    // {
+    //   from: 'Monica',
+    //   text: 'I\'m fine, thx!'
+    // }
   ])
 
   return (
