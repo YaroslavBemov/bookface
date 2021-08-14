@@ -34,7 +34,7 @@ test('renders message from props', () => {
     const message = 'Hello from Message component!'
     const props = { from: sender, text: message }
 
-    render(<Message {...props}/>, container)
+    render(<Message { ...props }/>, container)
   })
   expect(screen.getByText('Kram Toille Grebrekcuz')).toBeInTheDocument()
   expect(screen.getByText('Hello from Message component!')).toBeInTheDocument()
