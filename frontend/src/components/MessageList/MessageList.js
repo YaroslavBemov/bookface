@@ -26,11 +26,10 @@ function MessageList({list, setList}) {
   return (
     <>
       <div className={styles.messageList}>
-        <div className={styles.messages}>
-          {list.map(message => (
-            <Message {...message}/>
-          ))}
-        </div>
+        {list.length === 0 && <div>No messages</div>}
+        {list.map(message => (
+          <Message {...message}/>
+        ))}
 
         <div className={styles.input}>
           <InputText

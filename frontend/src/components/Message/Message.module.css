@@ -1,6 +1,8 @@
 .message {
   display: flex;
   align-items: flex-start;
+  max-width: 80%;
+  margin-right: auto;
 }
 
 .content {
@@ -11,10 +13,13 @@
   border-radius: 5px;
   box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.2);
   background-color: #283593;
+  overflow: hidden;
 }
 
 .mla {
   flex-direction: row-reverse;
+  margin-right: 0;
+  margin-left: auto;
 }
 
 .h3 {
