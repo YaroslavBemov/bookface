@@ -2,7 +2,7 @@ import './App.css'
 import MessageList from './components/MessageList'
 import { useState } from 'react'
 
-function App () {
+function App() {
   const [messageList, setMessageList] = useState([
     {
       from: 'Alex',
@@ -22,7 +22,7 @@ function App () {
 
   return (
     <div className="App">
-      <MessageList list={messageList}/>
+      <MessageList list={ messageList } setList={ setMessageList }/>
     </div>
   )
 }
