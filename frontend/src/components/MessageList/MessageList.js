@@ -10,8 +10,30 @@ function MessageList({list, setList}) {
     text: ''
   })
   const [isDisabled, setIsDisabled] = useState(true)
+  const [isScrollButtonVisible, setIsScrollButtonVisible] = useState({display: 'none'})
 
   const scrollTo = useRef()
+  const messageList = useRef()
+
+  useEffect(() => {
+    const listener = () => {
+      const target = scrollTo.current
+      const rect = target.getBoundingClientRect()
+      const viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight)
+
+      if ((rect.bottom < 0 || rect.top - viewHeight >= 0)) {
+        setIsScrollButtonVisible({display: 'inline-block'})
+      } else {
+        setIsScrollButtonVisible({display: 'none'})
+      }
+    }
+
+    messageList.current.addEventListener('scroll', listener)
+
+    return () => {
+      messageList.current.removeEventListener('scroll', listener)
+    }
+  }, [])
 
   useEffect(() => {
     const target = scrollTo.current
@@ -21,12 +43,9 @@ function MessageList({list, setList}) {
     })
 
     setTimeout(() => {
-      console.log(list)
-
       if (list.length > 0) {
         const author = list[list.length - 1].from
         const text = list[list.length - 1].text
-        console.log(author)
 
         if (author === 'Anonymous') {
           setList(prev => [...prev, {
@@ -56,17 +75,37 @@ function MessageList({list, setList}) {
     setInputText({text: ''})
     setIsDisabled(true)
   }
-//todo add button scroll to bottom
+
+  const handleScroll = () => {
+    const target = scrollTo.current
+    const rect = target.getBoundingClientRect()
+    const viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight)
+
+    if ((rect.bottom < 0 || rect.top - viewHeight >= 0)) {
+      target.scrollIntoView({
+        block: 'end',
+        behavior: 'smooth'
+      })
+    }
+  }
+
   return (
     <>
       <div className={styles.container}>
-        <div className={styles.messageList}>
+        <div className={styles.messageList} ref={messageList}>
           {list.length === 0 && <div>No messages</div>}
           {list.map(message => (
             <Message {...message}/>
           ))}
           <div ref={scrollTo}/>
         </div>
+
+        <button
+          onClick={handleScroll}
+          style={isScrollButtonVisible}
+          className={styles.scrollButton}
+        >Scroll
+        </button>
 
         <div className={styles.input}>
           <InputText
