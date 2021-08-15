@@ -4,6 +4,7 @@ import { unmountComponentAtNode } from 'react-dom'
 
 let container = null
 beforeEach(() => {
+  window.HTMLElement.prototype.scrollIntoView = function() {};
   container = document.createElement('div')
   document.body.appendChild(container)
 })

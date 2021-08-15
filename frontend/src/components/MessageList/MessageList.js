@@ -93,8 +93,8 @@ function MessageList({list, setList}) {
     <>
       <div className={styles.container}>
         <div className={styles.messageList} ref={messageList}>
-          {list.length === 0 && <div>No messages</div>}
-          {list.map(message => (
+          {list?.length === 0 && <div>No messages</div>}
+          {list?.map(message => (
             <Message {...message}/>
           ))}
           <div ref={scrollTo}/>
