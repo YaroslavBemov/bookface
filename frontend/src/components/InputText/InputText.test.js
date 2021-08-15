@@ -1,10 +1,9 @@
 import { act, render } from '@testing-library/react'
-import App from './App'
+import InputText from './InputText'
 import { unmountComponentAtNode } from 'react-dom'
 
 let container = null
 beforeEach(() => {
-  window.HTMLElement.prototype.scrollIntoView = function() {};
   container = document.createElement('div')
   document.body.appendChild(container)
 })
@@ -15,8 +14,8 @@ afterEach(() => {
   container = null
 })
 
-test('renders App component without crashing', () => {
+test('renders InputText component without crashing', () => {
   act(() => {
-    render(<App/>, container)
+    render(<InputText/>, container)
   })
 })
