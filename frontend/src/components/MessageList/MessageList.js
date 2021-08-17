@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import Message from '../Message'
 import styles from './Message-list.module.css'
 import Button from '../Button'
@@ -104,7 +105,7 @@ function MessageList({list, setList}) {
           onClick={handleScroll}
           style={isScrollButtonVisible}
           className={styles.scrollButton}
-        >Scroll
+        ><ArrowDownwardIcon/>
         </button>
 
         <div className={styles.input}>
