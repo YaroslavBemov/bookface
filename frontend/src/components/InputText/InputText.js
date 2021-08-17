@@ -16,6 +16,7 @@ function InputText({classes, value, onChange, onKeyPress}) {
       type="text"
       ref={inputRef}
       value={value}
+      placeholder='Message'
       onChange={onChange}
       onKeyPress={onKeyPress}
     />
