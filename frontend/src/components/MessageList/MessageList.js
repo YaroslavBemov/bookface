@@ -93,7 +93,7 @@ function MessageList({list, setList}) {
     <>
       <div className={styles.container}>
         <div className={styles.messageList} ref={messageList}>
-          {list?.length === 0 && <div>No messages</div>}
+          {list?.length === 0 && <div className={styles.empty}><span>No messages</span></div>}
           {list?.map(message => (
             <Message {...message}/>
           ))}

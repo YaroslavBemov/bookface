@@ -45,3 +45,10 @@
   color: #bbdefb;
   cursor: pointer;
 }
+
+.empty {
+  margin-bottom: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
