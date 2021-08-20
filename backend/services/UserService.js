@@ -13,11 +13,11 @@ class UserService {
       throw new Error('Email exists.')
     }
 
-    const passwordHash = bcrypt.hash(password, 3)
-    const user = await UserModel.create({email, password: passwordHash})
-
+    const passwordHash = await bcrypt.hash(password, 3)
     const activationLink = uuid.v4()
-    await MailService.sendActivationMail(email, activationLink)
+
+    await MailService.sendActivationMail(email, `${process.env.API_URL}/api/activate/${activationLink}`)
+    const user = await UserModel.create({email, password: passwordHash, activationLink})
 
     const userDto = new UserDTO(user)
     const tokens = TokenService.generateTokens({...userDto})
