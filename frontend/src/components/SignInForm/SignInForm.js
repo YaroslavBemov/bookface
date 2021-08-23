@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { Context } from '../../index'
+import { observer } from 'mobx-react-lite'
 
 const SignInForm = () => {
   const [email, setEmail] = useState('')
@@ -26,4 +27,4 @@ const SignInForm = () => {
   )
 }
 
-export default SignInForm
+export default observer(SignInForm)
