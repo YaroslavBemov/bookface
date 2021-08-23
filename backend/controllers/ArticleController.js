@@ -1,20 +1,11 @@
+const ArticleService = require('../services/ArticleService')
+
 class ArticleController {
   async index (req, res, next) {
     try {
-      res.json([
-        {
-          title: 'Lorem 1',
-          description: 'Lorem description 1'
-        },
-        {
-          title: 'Lorem 2',
-          description: 'Lorem description 2'
-        },
-        {
-          title: 'Lorem 3',
-          description: 'Lorem description 3'
-        }
-      ])
+      const articles = await ArticleService.getAllArticles()
+
+      return res.json(articles)
     } catch (e) {
       console.log(e)
     }
