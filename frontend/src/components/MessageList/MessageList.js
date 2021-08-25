@@ -31,9 +31,9 @@ function MessageList({list, setList}) {
 
     messageList.current.addEventListener('scroll', listener)
 
-    return () => {
-      messageList.current.removeEventListener('scroll', listener)
-    }
+    // return () => {
+    //   messageList.current.removeEventListener('scroll', listener)
+    // }
   }, [])
 
   useEffect(() => {

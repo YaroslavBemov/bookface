@@ -3,13 +3,15 @@ import AuthService from '../services/AuthService'
 import axios from 'axios'
 import { API_URL } from '../http'
 
-export default class Store {
+export default class UserStore {
   user = {}
   isAuth = false
   isLoading = false
+  rootStore
 
-  constructor () {
+  constructor (rootStore) {
     makeAutoObservable(this)
+    this.rootStore = rootStore
   }
 
   setUser(user) {
@@ -28,7 +30,6 @@ export default class Store {
     this.setLoading(true)
     try {
       const response = await AuthService.signUp(email, password)
-      console.log(response)
       localStorage.setItem('accessToken', response.data.accessToken)
       this.setAuth(true)
       this.setUser(response.data.user)
@@ -43,7 +44,6 @@ export default class Store {
     this.setLoading(true)
     try {
       const response = await AuthService.signIn(email, password)
-      console.log(response)
       localStorage.setItem('accessToken', response.data.accessToken)
       this.setAuth(true)
       this.setUser(response.data.user)
