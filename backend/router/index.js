@@ -1,8 +1,9 @@
 const Router = require('express').Router
 const { body } = require('express-validator')
 
-const articleController = require('../controllers/ArticleController')
-const userController = require('../controllers/UserController')
+const ArticleController = require('../controllers/ArticleController')
+const UserController = require('../controllers/UserController')
+const ChatController = require('../controllers/ChatController')
 
 const authMiddleware = require('../middleware/AuthMiddleware')
 
@@ -11,17 +12,19 @@ const router = new Router()
 router.post('/signup',
   body('email').isEmail(),
   body('password').isLength({ min: 3, max: 32 }),
-  userController.signUp)
+  UserController.signUp)
 
 router.post('/signin',
   body('email').isEmail(),
   body('password').isLength({ min: 3, max: 32 }),
-  userController.signIn)
+  UserController.signIn)
 
-router.post('/signout', userController.signOut)
-router.get('/activate/:link', userController.activate)
-router.get('/refresh', userController.refresh)
+router.post('/signout', UserController.signOut)
+router.get('/activate/:link', UserController.activate)
+router.get('/refresh', UserController.refresh)
 
-router.get('/articles', authMiddleware, articleController.index)
+router.get('/articles', authMiddleware, ArticleController.index)
+
+router.get('/chats', authMiddleware, ChatController.index)
 
 module.exports = router
