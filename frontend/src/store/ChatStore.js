@@ -1,7 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 
-export default class ArticleStore {
-  article = 'Article'
+export default class ChatStore {
   rootStore
 
   constructor (rootStore) {
