@@ -7,7 +7,7 @@ class ArticleController {
 
       return res.json(articles)
     } catch (e) {
-      console.log(e)
+      next(e)
     }
   }
 
@@ -15,7 +15,7 @@ class ArticleController {
     try {
 
     } catch (e) {
-      console.log(e)
+      next(e)
     }
   }
 
@@ -23,7 +23,7 @@ class ArticleController {
     try {
 
     } catch (e) {
-      console.log(e)
+      next(e)
     }
   }
 
@@ -31,7 +31,7 @@ class ArticleController {
     try {
 
     } catch (e) {
-      console.log(e)
+      next(e)
     }
   }
 
@@ -39,7 +39,7 @@ class ArticleController {
     try {
 
     } catch (e) {
-      console.log(e)
+      next(e)
     }
   }
 }
