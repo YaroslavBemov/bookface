@@ -8,7 +8,14 @@ const bcrypt = require('bcrypt')
 const uuid = require('uuid')
 
 class UserService {
-  async signUp (email, password) {
+  async getAllUsers() {
+    const data = await UserModel.find()
+    const users = data.map(user => new UserDTO(user))
+
+    return {users}
+  }
+
+  async signUp (name, email, password) {
     const candidate = await UserModel.findOne({ email })
     if (candidate) {
       throw ApiError.badRequest('Email exists.')
@@ -18,6 +25,7 @@ class UserService {
     const activationLink = uuid.v4()
 
     const user = await UserModel.create({
+      name,
       email,
       password: passwordHash,
       activationLink
