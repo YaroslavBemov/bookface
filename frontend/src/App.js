@@ -12,6 +12,7 @@ import SignUp from './pages/SignUp'
 import SignIn from './pages/SignIn'
 import Article from './pages/Article'
 import Profile from './pages/Profile'
+import Users from './pages/Users'
 
 function App () {
   const { userStore } = useContext(Context)
@@ -41,6 +42,9 @@ function App () {
         <Switch>
           <Route path="/" exact>
             <Main/>
+          </Route>
+          <Route path="/users" exact>
+            <Users/>
           </Route>
           <Route path="/chat">
             <ChatPage/>

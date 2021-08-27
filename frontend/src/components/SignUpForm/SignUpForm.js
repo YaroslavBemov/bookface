@@ -3,9 +3,14 @@ import { Context } from '../../index'
 import { observer } from 'mobx-react-lite'
 
 const SignUpForm = () => {
+  const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const { userStore } = useContext(Context)
+
+  const nameChangeHandler = (e) => {
+    setName(e.target.value)
+  }
 
   const emailChangeHandler = (e) => {
     setEmail(e.target.value)
@@ -16,12 +21,13 @@ const SignUpForm = () => {
   }
 
   const signUpClickHandler = () => {
-    userStore.signUp(email, password)
-
+    userStore.signUp(name, email, password)
   }
 
   return (
     <div>
+      <input type="text" placeholder="Name" value={name}
+             onChange={nameChangeHandler}/>
       <input type="text" placeholder="Email" value={email}
              onChange={emailChangeHandler}/>
       <input type="text" placeholder="Password" value={password}

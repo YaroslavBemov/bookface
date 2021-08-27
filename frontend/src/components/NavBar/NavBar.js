@@ -44,6 +44,10 @@ function ButtonAppBar () {
     setAnchorEl(null)
   }
 
+  const usersClickHandler = () => {
+    history.push('/users')
+  }
+
   const chatClickHandler = () => {
     history.push('/chat')
   }
@@ -82,6 +86,7 @@ function ButtonAppBar () {
           <Typography variant="h6" className={classes.title}>
             Bookface
           </Typography>
+          <Button color='inherit' onClick={usersClickHandler}>Users</Button>
           <Button color='inherit' onClick={chatClickHandler}>Chat</Button>
           <Button color='inherit' onClick={articleClickHandler}>Articles</Button>
 

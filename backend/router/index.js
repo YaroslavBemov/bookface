@@ -10,6 +10,7 @@ const authMiddleware = require('../middleware/AuthMiddleware')
 const router = new Router()
 
 router.post('/signup',
+  body('name').isString().isLength({min: 1, max: 32}),
   body('email').isEmail(),
   body('password').isLength({ min: 3, max: 32 }),
   UserController.signUp)
@@ -23,8 +24,11 @@ router.post('/signout', UserController.signOut)
 router.get('/activate/:link', UserController.activate)
 router.get('/refresh', UserController.refresh)
 
+router.get('/users', authMiddleware, UserController.index)
+
 router.get('/articles', authMiddleware, ArticleController.index)
 
 router.get('/chats', authMiddleware, ChatController.index)
+router.post('/chats/new', authMiddleware, ChatController.store)
 
 module.exports = router
