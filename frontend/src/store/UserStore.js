@@ -26,10 +26,11 @@ export default class UserStore {
     this.isLoading = bool
   }
 
-  async signUp(email, password) {
+  async signUp(name, email, password) {
+
     this.setLoading(true)
     try {
-      const response = await AuthService.signUp(email, password)
+      const response = await AuthService.signUp(name, email, password)
       localStorage.setItem('accessToken', response.data.accessToken)
       this.setAuth(true)
       this.setUser(response.data.user)
@@ -56,7 +57,7 @@ export default class UserStore {
 
   async signOut() {
     try {
-      const response = await AuthService.signOut()
+      await AuthService.signOut()
       localStorage.removeItem('accessToken')
       this.setAuth(false)
       this.setUser({})
