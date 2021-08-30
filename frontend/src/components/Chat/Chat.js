@@ -4,23 +4,16 @@ import ChatList from '../ChatList'
 import MessageList from '../MessageList'
 import { Context } from '../../index'
 import { observer } from 'mobx-react-lite'
-import { toJS } from 'mobx'
 
 const Chat = () => {
-  const { chatStore, userStore } = useContext(Context)
+  const { chatStore } = useContext(Context)
   const [messageList, setMessageList] = useState([])
-  const chats = toJS(chatStore.chats)
+  const party = chatStore.party
 
-  const party = chats.map(item => {
-    const id = item._id
-    const members = item.party
-      .filter(member => member.id !== userStore.user.id)
-      .map(member => member.name)
-    return {id, members}
-  })
 
   useEffect(() => {
     chatStore.getChats()
+    chatStore.setParty()
   }, [])
 
   return (
