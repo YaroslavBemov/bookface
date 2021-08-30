@@ -43,19 +43,19 @@ function MessageList({list, setList}) {
       behavior: 'smooth'
     })
 
-    setTimeout(() => {
-      if (list.length > 0) {
-        const author = list[list.length - 1].from
-        const text = list[list.length - 1].text
-
-        if (author === 'Anonymous') {
-          setList(prev => [...prev, {
-            from: 'Bot',
-            text: `You send "${text}".`
-          }])
-        }
-      }
-    }, 1000)
+    // setTimeout(() => {
+    //   if (list.length > 0) {
+    //     const author = list[list.length - 1].from
+    //     const text = list[list.length - 1].text
+    //
+    //     if (author === 'Anonymous') {
+    //       setList(prev => [...prev, {
+    //         from: 'Bot',
+    //         text: `You send "${text}".`
+    //       }])
+    //     }
+    //   }
+    // }, 1000)
 
   }, [list])
 

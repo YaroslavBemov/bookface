@@ -4,6 +4,7 @@ import ChatService from '../services/ChatService'
 export default class ChatStore {
   rootStore
   chats = []
+  currentChatId = ''
 
   constructor (rootStore) {
     makeAutoObservable(this)
@@ -14,5 +15,13 @@ export default class ChatStore {
     const userId = await this.rootStore.userStore.user.id
     const response = await ChatService.getChats(userId)
     this.chats = response.data.chats
+  }
+
+  async getMessages(chatId) {
+
+  }
+
+  setCurrentChatId (chatId) {
+    this.currentChatId = chatId
   }
 }

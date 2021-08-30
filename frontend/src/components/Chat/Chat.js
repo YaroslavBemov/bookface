@@ -7,10 +7,17 @@ import { observer } from 'mobx-react-lite'
 import { toJS } from 'mobx'
 
 const Chat = () => {
+  const { chatStore, userStore } = useContext(Context)
   const [messageList, setMessageList] = useState([])
-  const { chatStore } = useContext(Context)
-  // const chats = chatStore.chats
-  console.log(toJS(chatStore.chats[0]))
+  const chats = toJS(chatStore.chats)
+
+  const party = chats.map(item => {
+    const id = item._id
+    const members = item.party
+      .filter(member => member.id !== userStore.user.id)
+      .map(member => member.name)
+    return {id, members}
+  })
 
   useEffect(() => {
     chatStore.getChats()
@@ -18,8 +25,8 @@ const Chat = () => {
 
   return (
     <div className={styles.chat}>
-      {chatStore.chats.map(chat => (
-        <ChatList chat={toJS(chat)}/>
+      {party.map(item => (
+        <ChatList key={item.id} item={item} />
       ))}
       <MessageList list={messageList} setList={setMessageList}/>
     </div>
