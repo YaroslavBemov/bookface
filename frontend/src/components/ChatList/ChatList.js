@@ -1,28 +1,15 @@
 import React, { useState } from 'react'
 import styles from './ChatList.module.css'
 
-const ChatList = () => {
-  const [chatList, setChatList] = useState([
-    // {
-    //   id: 1,
-    //   title: 'First chat'
-    // },
-    // {
-    //   id: 2,
-    //   title: 'Second chat'
-    // },
-    // {
-    //   id: 3,
-    //   title: 'Third chat'
-    // }
-  ])
+const ChatList = ({ chat }) => {
+  const member = chat.party[1].name
 
   return (
     <div className={styles.chatList}>
-      {chatList?.length === 0 && <div className={styles.empty}><span>No chats</span></div>}
-      {chatList.map((chat) => (
-        <div key={chat.id}>{chat.title}</div>
-      ))}
+      {chat?.length === 0 && <div className={styles.empty}><span>No chats</span></div>}
+      <div>
+        {member}
+      </div>
     </div>
   )
 }
