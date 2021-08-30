@@ -1,17 +1,24 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Context } from '../../index'
 
-const ChatList = ({ item }) => {
-  const {chatStore} = useContext(Context)
+const ChatList = ({ chat }) => {
+  const { userStore, chatStore } = useContext(Context)
+  const [membersList, setMembersList] = useState([])
 
   const chatClickHandler = () => {
-    chatStore.setCurrentChatId(item.id)
+    chatStore.setCurrentChatId(chat._id)
   }
 
+  useEffect(() => {
+    setMembersList(chat.party
+      .filter(member => member.id !== userStore.user.id))
+  }, [chat])
+
   return (
-      <div onClick={chatClickHandler}>
-        {item.members.map(member => <span>{member}</span>)}
-      </div>
+    <>
+      {membersList.map(member =>
+        <div key={chat._id} onClick={chatClickHandler}>{member.name}</div>)}
+    </>
   )
 }
 
