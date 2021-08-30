@@ -20,7 +20,8 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2)
   },
   title: {
-    flexGrow: 1
+    flexGrow: 1,
+    cursor: 'pointer'
   }
 }))
 
@@ -42,6 +43,10 @@ function ButtonAppBar () {
 
   const handleClose = () => {
     setAnchorEl(null)
+  }
+
+  const logoClickHandler = () => {
+    history.push('/')
   }
 
   const usersClickHandler = () => {
@@ -83,12 +88,13 @@ function ButtonAppBar () {
           {/*            color="inherit" aria-label="menu">*/}
           {/*  <MenuIcon/>*/}
           {/*</IconButton>*/}
-          <Typography variant="h6" className={classes.title}>
+          <Typography variant="h6" className={classes.title} onClick={logoClickHandler}>
             Bookface
           </Typography>
-          <Button color='inherit' onClick={usersClickHandler}>Users</Button>
-          <Button color='inherit' onClick={chatClickHandler}>Chat</Button>
-          <Button color='inherit' onClick={articleClickHandler}>Articles</Button>
+          <Button color="inherit" onClick={usersClickHandler}>Users</Button>
+          <Button color="inherit" onClick={chatClickHandler}>Chat</Button>
+          <Button color="inherit"
+                  onClick={articleClickHandler}>Articles</Button>
 
           {auth ? (
             <div>
@@ -122,8 +128,10 @@ function ButtonAppBar () {
             </div>
           ) : (
             <div>
-              <Button color="inherit" onClick={signInClickHandler}>Sign in</Button>
-              <Button color="inherit" onClick={signUpClickHandler}>Sign up</Button>
+              <Button color="inherit" onClick={signInClickHandler}>Sign
+                in</Button>
+              <Button color="inherit" onClick={signUpClickHandler}>Sign
+                up</Button>
             </div>
           )}
 
