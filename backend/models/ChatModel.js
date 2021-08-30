@@ -14,6 +14,7 @@ const ChatSchema = new Schema({
   messages: [
     {
       author: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+      name: {type: String, required: true},
       content: {type: String, maxLength: 255, required: true},
       createdAt: { type: Date, default: Date.now },
       status: { type: String, match: /new|deleted|read/, default: 'new' }

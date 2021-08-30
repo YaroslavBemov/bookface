@@ -12,7 +12,7 @@ class ChatController {
     }
   }
 
-  async store (req, res, next) {
+  async storeChat (req, res, next) {
     try {
       const {toId, toName, content} = req.body
       const fromId = req.user.id
@@ -23,6 +23,10 @@ class ChatController {
     } catch (e) {
       next(e)
     }
+  }
+
+  async storeMessage() {
+
   }
 }
 

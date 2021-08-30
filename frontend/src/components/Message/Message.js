@@ -3,7 +3,6 @@ import styles from './Message.module.css'
 import classNames from 'classnames'
 
 const Message = ({message}) => {
-  console.log(message)
   // const align = author === 'Anonymous' ? styles.mla : null
   // const messageStyles = classNames(styles.message, align)
 
@@ -12,7 +11,7 @@ const Message = ({message}) => {
       // className={messageStyles}
     >
       <div className={styles.content}>
-        <h3 className={styles.h3}>{message.author}</h3>
+        <h3 className={styles.h3}>{message.name}</h3>
         <p>{message.content}</p>
       </div>
     </div>

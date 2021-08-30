@@ -15,7 +15,7 @@ class ChatService {
     const chat = await ChatModel.create({
       owner: fromId,
       party: [{id: fromId, name: fromName}, {id: toId, name: toName}],
-      messages: [{author: fromId, content}]
+      messages: [{author: fromId, name: fromName, content}]
     })
 
     return {chat}

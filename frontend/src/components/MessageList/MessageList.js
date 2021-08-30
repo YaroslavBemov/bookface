@@ -11,15 +11,11 @@ import { observer } from 'mobx-react-lite'
 function MessageList() {
   const {chatStore} = useContext(Context)
   const currentChatId = chatStore.currentChatId
-  // console.log(currentChatId)
   const chat = toJS(chatStore.chats).filter(chat => chat._id === chatStore.currentChatId)
-  console.log(chat)
   const messages = chat[0]?.messages
-  console.log('MESSAGES ' + messages)
 
   const [inputText, setInputText] = useState({
-    from: '',
-    text: ''
+    content: ''
   })
   const [isDisabled, setIsDisabled] = useState(true)
   const [isScrollButtonVisible, setIsScrollButtonVisible] = useState({display: 'none'})
@@ -72,19 +68,19 @@ function MessageList() {
 
   const handleChange = (e) => {
     setInputText({
-      from: 'Anonymous',
-      text: e.target.value
+      content: e.target.value
     })
     setIsDisabled(e.target.value === '')
   }
   const handleKeyPress = (e) => {
     if (e.key === 'Enter' && e.target.value !== '') {
-      // handleClick()
+      handleClick()
     }
   }
   const handleClick = () => {
     // setList(prev => [...prev, inputText])
-    setInputText({text: ''})
+    chatStore.addMessage(inputText)
+    setInputText({content: ''})
     setIsDisabled(true)
   }
 

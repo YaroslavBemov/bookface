@@ -21,6 +21,10 @@ export default class ChatStore {
 
   }
 
+  async addMessage(content, chatId = this.currentChatId) {
+    const response = await ChatService.addMessage(content, chatId)
+  }
+
   setCurrentChatId (chatId) {
     this.currentChatId = chatId
   }
