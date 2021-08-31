@@ -1,24 +1,23 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import React, { useContext, useEffect, useState } from 'react'
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
 import Message from '../Message'
 import styles from './Message-list.module.css'
 import Button from '../Button'
 import InputText from '../InputText'
 import { Context } from '../../index'
-import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
-function MessageList() {
-  const {chatStore} = useContext(Context)
-  const currentChatId = chatStore.currentChatId
-  const chat = chatStore.chats.filter(chat => chat._id === chatStore.currentChatId)
-  const messages = chat[0]?.messages
+function MessageList () {
+  const { chatStore } = useContext(Context)
+  // const currentChatId = chatStore.currentChatId
+  // const chat = chatStore.chats.filter(chat => chat._id === chatStore.currentChatId)
+  // const messages = chat[0]?.messages
 
   const [inputText, setInputText] = useState({
     content: ''
   })
-  const [isDisabled, setIsDisabled] = useState(true)
-  const [isScrollButtonVisible, setIsScrollButtonVisible] = useState({display: 'none'})
+  // const [isDisabled, setIsDisabled] = useState(true)
+  // const [isScrollButtonVisible, setIsScrollButtonVisible] = useState({display: 'none'})
 
   // const scrollTo = useRef()
   // const messageList = useRef()
@@ -70,7 +69,7 @@ function MessageList() {
     setInputText({
       content: e.target.value
     })
-    setIsDisabled(e.target.value === '')
+    // setIsDisabled(e.target.value === '')
   }
   const handleKeyPress = (e) => {
     if (e.key === 'Enter' && e.target.value !== '') {
@@ -79,8 +78,8 @@ function MessageList() {
   }
   const handleClick = () => {
     chatStore.addMessage(inputText)
-    setInputText({content: ''})
-    setIsDisabled(true)
+    setInputText({ content: '' })
+    // setIsDisabled(true)
   }
 
   // const handleScroll = () => {
@@ -96,14 +95,20 @@ function MessageList() {
   //   }
   // }
 
+  useEffect(() => {
+    console.log('render')
+    // chatStore.getCurrentChat()
+  }, [])
+
   return (
     <>
       <div className={styles.container}>
         <div className={styles.messageList}
-             // ref={messageList}
+          // ref={messageList}
         >
-          {messages?.length === 0 && <div className={styles.empty}><span>No messages</span></div>}
-          {messages?.map(message => (
+          {chatStore.currentChat.messages?.length === 0 &&
+          <div className={styles.empty}><span>No messages</span></div>}
+          {chatStore.currentChat.messages?.map(message => (
             <Message message={message}/>
           ))}
           {/*<div ref={scrollTo}/>*/}
@@ -111,7 +116,7 @@ function MessageList() {
 
         <button
           // onClick={handleScroll}
-          style={isScrollButtonVisible}
+          // style={isScrollButtonVisible}
           className={styles.scrollButton}
         ><ArrowDownwardIcon/>
         </button>
@@ -128,7 +133,7 @@ function MessageList() {
             // icon={'send'}
             title="Send"
             onClick={handleClick}
-            disabled={isDisabled}
+            // disabled={isDisabled}
           />
         </div>
       </div>

@@ -21,7 +21,7 @@ function App () {
     if (localStorage.getItem('accessToken')) {
       userStore.checkAuth()
     }
-  }, [])
+  }, [userStore])
 
   // if (store.isLoading) {
   //   return <div>Loading...</div>

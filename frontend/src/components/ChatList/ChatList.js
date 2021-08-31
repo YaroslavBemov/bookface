@@ -1,25 +1,23 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import { Context } from '../../index'
+import { observer } from 'mobx-react-lite'
 
-const ChatList = ({ chat }) => {
-  const { userStore, chatStore } = useContext(Context)
-  const [membersList, setMembersList] = useState([])
+const ChatList = ({ id, name }) => {
+  const { chatStore } = useContext(Context)
 
   const chatClickHandler = () => {
-    chatStore.setCurrentChatId(chat._id)
+    chatStore.setCurrentChatId(id)
+    chatStore.getCurrentChat()
   }
 
-  useEffect(() => {
-    setMembersList(chat.party
-      .filter(member => member.id !== userStore.user.id))
-  }, [chat])
-
   return (
-    <div>
-      {membersList.map(member =>
-        <div key={chat._id} onClick={chatClickHandler}>{member.name}</div>)}
+    <div
+         onClick={chatClickHandler}
+    >
+      {name}
     </div>
   )
+
 }
 
-export default ChatList
+export default observer(ChatList)

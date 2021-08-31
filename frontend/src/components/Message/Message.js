@@ -1,6 +1,5 @@
 import React from 'react'
 import styles from './Message.module.css'
-import classNames from 'classnames'
 
 const Message = ({message}) => {
   // const align = author === 'Anonymous' ? styles.mla : null
