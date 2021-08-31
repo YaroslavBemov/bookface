@@ -29,7 +29,7 @@ router.get('/users', authMiddleware, UserController.index)
 router.get('/articles', authMiddleware, ArticleController.index)
 
 router.get('/chats', authMiddleware, ChatController.index)
-router.post('/chats/new', authMiddleware, ChatController.storeChat)
+router.post('/chats', authMiddleware, ChatController.storeChat)
 router.post('/chats/:id', authMiddleware, ChatController.storeMessage)
 
 module.exports = router

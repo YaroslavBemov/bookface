@@ -16,9 +16,15 @@ const Chat = () => {
 
   return (
     <div className={styles.chat}>
-      {chats.map(chat => (
-        <ChatList key={chat._id} chat={chat}/>
-      ))}
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column'
+      }}>
+        {chats.map(chat => (
+          <ChatList key={chat._id} chat={chat}/>
+        ))}
+      </div>
+
       <MessageList/>
     </div>
   )

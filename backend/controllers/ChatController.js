@@ -25,8 +25,18 @@ class ChatController {
     }
   }
 
-  async storeMessage() {
+  async storeMessage(req, res, next) {
+    try {
+      const chatId = req.params.id
+      const {content} = req.body
+      const {id, name} = req.user
 
+      const chat = await ChatService.storeMessage(content, chatId, id, name)
+
+      return res.json(chat)
+    } catch (e) {
+      next(e)
+    }
   }
 }
 

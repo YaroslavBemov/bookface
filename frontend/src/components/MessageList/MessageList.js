@@ -11,7 +11,7 @@ import { observer } from 'mobx-react-lite'
 function MessageList() {
   const {chatStore} = useContext(Context)
   const currentChatId = chatStore.currentChatId
-  const chat = toJS(chatStore.chats).filter(chat => chat._id === chatStore.currentChatId)
+  const chat = chatStore.chats.filter(chat => chat._id === chatStore.currentChatId)
   const messages = chat[0]?.messages
 
   const [inputText, setInputText] = useState({
@@ -78,7 +78,6 @@ function MessageList() {
     }
   }
   const handleClick = () => {
-    // setList(prev => [...prev, inputText])
     chatStore.addMessage(inputText)
     setInputText({content: ''})
     setIsDisabled(true)

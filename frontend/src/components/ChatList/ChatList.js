@@ -15,10 +15,10 @@ const ChatList = ({ chat }) => {
   }, [chat])
 
   return (
-    <>
+    <div>
       {membersList.map(member =>
         <div key={chat._id} onClick={chatClickHandler}>{member.name}</div>)}
-    </>
+    </div>
   )
 }
 

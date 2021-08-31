@@ -6,7 +6,6 @@ export default class ChatService {
   }
 
   static async addMessage(content, chatId) {
-    console.log(content)
-    // return await $api.post(`/chats/${chatId}`, {content})
+    return await $api.post(`/chats/${chatId}`, content)
   }
 }

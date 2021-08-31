@@ -1,4 +1,4 @@
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable, runInAction, toJS } from 'mobx'
 import ChatService from '../services/ChatService'
 
 export default class ChatStore {
@@ -22,7 +22,20 @@ export default class ChatStore {
   }
 
   async addMessage(content, chatId = this.currentChatId) {
-    const response = await ChatService.addMessage(content, chatId)
+    try {
+      const response = await ChatService.addMessage(content, chatId)
+
+      runInAction(() => {
+        this.chats.map(chat => {
+          return chat._id === chatId ? chat = response : null
+        })
+        console.log(toJS(this.chats))
+      })
+    } catch (e) {
+      runInAction(() => {
+        console.log(e)
+      })
+    }
   }
 
   setCurrentChatId (chatId) {
