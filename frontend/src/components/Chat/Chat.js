@@ -5,27 +5,32 @@ import { Context } from '../../index'
 import { observer } from 'mobx-react-lite'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchChats, chatsSelector } from '../../slices/chats'
+import { toJS } from 'mobx'
 
 const Chat = () => {
   const { chatStore, userStore } = useContext(Context)
 
-
-  const dispatch = useDispatch()
-  const { chats, loading, hasErrors } = useSelector(chatsSelector)
-
   useEffect(() => {
-    dispatch(fetchChats('61289e5c4b4fc51c8cd5ed2b'))
-  }, [dispatch])
+    chatStore.getChats()
+  }, [chatStore])
+
+  // const dispatch = useDispatch()
+  // const { chats, loading, hasErrors } = useSelector(chatsSelector)
+
+  // useEffect(() => {
+  //   dispatch(fetchChats('61289e5c4b4fc51c8cd5ed2b'))
+  // }, [dispatch])
 
   const renderChats = () => {
-    if (loading) return <p>Loading posts...</p>
-    if (hasErrors) return <p>Unable to display chats.</p>
+    if (chatStore.loading) return <p>Loading posts...</p>
+    if (chatStore.hasErrors) return <p>Unable to display chats.</p>
 
-    return chats.map(chat => {
-      console.log(chat)
-      // const id = chat[0]._id
-      // const name = chat[0].name
-      return <ChatList key={chat._id} id={chat._id} name={chat.party[1].name}/>
+    return chatStore.getChatList.map(chat => {
+      return <ChatList
+        key={chat[0][0]._id}
+        id={chat[0][0]._id}
+        name={chat[0][0].name}
+      />
     })
   }
 
@@ -36,9 +41,7 @@ const Chat = () => {
     </section>
   )
 
-  // useEffect(() => {
-  //   chatStore.getChats()
-  // }, [chatStore])
+
 
   // return (
   //   <div>

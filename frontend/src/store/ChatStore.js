@@ -7,6 +7,9 @@ export default class ChatStore {
   chatList = []
   currentChat = []
   currentChatId = ''
+  loading = false
+  hasErrors = false
+  userId
 
   constructor (rootStore) {
     makeAutoObservable(this)
@@ -14,24 +17,54 @@ export default class ChatStore {
   }
 
   async getChats () {
+    runInAction(() => {
+      this.loading = true
+      console.log('loading ' + this.loading)
+      this.hasErrors = false
+    })
     try {
       const userId = await this.rootStore.userStore.user.id
       const response = await ChatService.getChats(userId)
-      this.chats = response.data.chats
-      this.getChatList()
-    } catch (e) {
       runInAction(() => {
-        console.log(e)
+        this.userId = userId
+        this.chats = response.data.chats
+        // this.chatList = this.getChatList
+      })
+    } catch (e) {
+      console.log(e)
+      runInAction(() => {
+        this.hasErrors = true
+      })
+    } finally {
+      runInAction(() => {
+        this.loading = false
+        console.log('loading ' + this.loading)
+        // console.log(toJS(this.chats))
       })
     }
   }
 
-  getChatList () {
-    const party = this.chats.map(chat => chat.party)
-    this.chatList = party
-      .map(members => members
-        .filter(member => member.id !== this.rootStore.userStore.user.id))
+  get getChatList () {
+    const party = this.chats.map(chat => {
+      return {
+        id: chat._id,
+        party: [chat.party]
+      }
+    })
+    // console.log(toJS(party))
+    return party.map(members => {
+      // console.log(toJS(members.party))
 
+      return members.party.map(item => {
+        return item.filter(member => {
+          // console.log(toJS(member))
+          // console.log(member.id)
+          // console.log(member.id !== userId)
+          return member.id !== this.userId
+        })
+      })
+    })
+    // console.log(toJS(this.chatList))
   }
 
   setCurrentChatId (chatId) {
@@ -41,6 +74,7 @@ export default class ChatStore {
   getCurrentChat () {
     this.currentChat = this.chats.filter(chat => {
       console.log(toJS(chat))
+      console.log(this.currentChatId)
       return chat._id === this.currentChatId
     })
     console.log(toJS(this.currentChat))
