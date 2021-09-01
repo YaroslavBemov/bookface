@@ -2,6 +2,7 @@ import React from 'react'
 import styles from './Message.module.css'
 
 const Message = ({message}) => {
+  // console.log(message)
   // const align = author === 'Anonymous' ? styles.mla : null
   // const messageStyles = classNames(styles.message, align)
 

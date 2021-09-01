@@ -6,6 +6,7 @@ import Button from '../Button'
 import InputText from '../InputText'
 import { Context } from '../../index'
 import { observer } from 'mobx-react-lite'
+import { autorun, toJS } from 'mobx'
 
 function MessageList () {
   const { chatStore } = useContext(Context)
@@ -100,16 +101,18 @@ function MessageList () {
     // chatStore.getCurrentChat()
   }, [])
 
+  // console.log(toJS(chatStore.getCurrentChatMessages))
+
   return (
     <>
       <div className={styles.container}>
         <div className={styles.messageList}
           // ref={messageList}
         >
-          {chatStore.currentChat.messages?.length === 0 &&
+          {chatStore.getCurrentChatMessages.length === 0 &&
           <div className={styles.empty}><span>No messages</span></div>}
-          {chatStore.currentChat.messages?.map(message => (
-            <Message message={message}/>
+          {chatStore.getCurrentChatMessages.map(message => (
+            <Message key={message._id} message={message}/>
           ))}
           {/*<div ref={scrollTo}/>*/}
         </div>

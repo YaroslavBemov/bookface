@@ -24,12 +24,13 @@ const Chat = () => {
   const renderChats = () => {
     if (chatStore.loading) return <p>Loading posts...</p>
     if (chatStore.hasErrors) return <p>Unable to display chats.</p>
+    // console.log(chatStore.getChatList)
 
     return chatStore.getChatList.map(chat => {
       return <ChatList
-        key={chat[0][0]._id}
-        id={chat[0][0]._id}
-        name={chat[0][0].name}
+        key={chat.id}
+        id={chat.id}
+        name={chat.party[0].name}
       />
     })
   }
@@ -38,6 +39,7 @@ const Chat = () => {
     <section>
       <h1>Chats</h1>
       {renderChats()}
+      <MessageList/>
     </section>
   )
 

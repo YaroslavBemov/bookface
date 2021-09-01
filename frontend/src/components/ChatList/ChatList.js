@@ -7,7 +7,7 @@ const ChatList = ({ id, name }) => {
 
   const chatClickHandler = () => {
     chatStore.setCurrentChatId(id)
-    chatStore.getCurrentChat()
+    // chatStore.getCurrentChat()
   }
 
   return (

@@ -1,10 +1,9 @@
-import { makeAutoObservable, runInAction, toJS } from 'mobx'
+import { makeAutoObservable, runInAction, toJS, autorun } from 'mobx'
 import ChatService from '../services/ChatService'
 
 export default class ChatStore {
   rootStore
   chats = []
-  chatList = []
   currentChat = []
   currentChatId = ''
   loading = false
@@ -45,49 +44,59 @@ export default class ChatStore {
   }
 
   get getChatList () {
-    const party = this.chats.map(chat => {
+    return this.chats.map(chat => {
       return {
         id: chat._id,
-        party: [chat.party]
+        party: chat.party.filter(member => member.id !== this.userId)
       }
     })
     // console.log(toJS(party))
-    return party.map(members => {
-      // console.log(toJS(members.party))
-
-      return members.party.map(item => {
-        return item.filter(member => {
-          // console.log(toJS(member))
-          // console.log(member.id)
-          // console.log(member.id !== userId)
-          return member.id !== this.userId
-        })
-      })
-    })
-    // console.log(toJS(this.chatList))
+    // return party.map(members => {
+    //   // console.log(toJS(members.party))
+    //
+    //   return members.party.map(item => {
+    //
+    //     return item.filter(member => {
+    //       // console.log(toJS(member))
+    //       // console.log(member.id)
+    //       // console.log(member.id !== userId)
+    //       return member.id !== this.userId
+    //     })
+    //   })
+    // })
   }
 
   setCurrentChatId (chatId) {
     this.currentChatId = chatId
   }
 
-  getCurrentChat () {
-    this.currentChat = this.chats.filter(chat => {
-      console.log(toJS(chat))
-      console.log(this.currentChatId)
-      return chat._id === this.currentChatId
-    })
-    console.log(toJS(this.currentChat))
+  get getCurrentChatMessages () {
+    return this.currentChatId !== ''
+      ? this.chats.filter(chat => chat._id === this.currentChatId)[0].messages
+      : []
+
+    // return this.chats.filter(chat => {
+    // console.log(toJS(chat))
+    // console.log(this.currentChatId)
+    // return chat._id === this.currentChatId
+    // return chat._id === this.currentChatId
+    // })
   }
 
   async addMessage (content, chatId = this.currentChatId) {
     try {
       const response = await ChatService.addMessage(content, chatId)
+      console.log(response.data)
 
       runInAction(() => {
-        this.chats.map(chat => {
-          return chat._id === chatId ? chat = response : null
-        })
+        this.chats = this.chats.map(chat => chat._id === chatId ? Object.assign({}, response.data) : chat)
+          // if (chat._id === chatId) {
+          //   console.log(chat)
+          //   chat = response.data
+          //   console.log(chat)
+          // }
+          // return chat._id === chatId ? Object.assign({}, response.data) : null
+
         console.log(toJS(this.chats))
       })
     } catch (e) {
@@ -96,5 +105,4 @@ export default class ChatStore {
       })
     }
   }
-
 }
