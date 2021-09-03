@@ -15,7 +15,7 @@ class UserService {
     return {users}
   }
 
-  async signUp (name, email, password) {
+  async signUp (firstName, lastName, email, password) {
     const candidate = await UserModel.findOne({ email })
     if (candidate) {
       throw ApiError.badRequest('Email exists.')
@@ -25,7 +25,8 @@ class UserService {
     const activationLink = uuid.v4()
 
     const user = await UserModel.create({
-      name,
+      firstName,
+      lastName,
       email,
       password: passwordHash,
       activationLink

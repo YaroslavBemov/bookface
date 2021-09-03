@@ -1,10 +1,9 @@
-import { makeAutoObservable, runInAction, toJS, autorun } from 'mobx'
+import { makeAutoObservable, runInAction } from 'mobx'
 import ChatService from '../services/ChatService'
 
 export default class ChatStore {
   rootStore
   chats = []
-  currentChat = []
   currentChatId = ''
   loading = false
   hasErrors = false
@@ -18,7 +17,6 @@ export default class ChatStore {
   async getChats () {
     runInAction(() => {
       this.loading = true
-      console.log('loading ' + this.loading)
       this.hasErrors = false
     })
     try {
@@ -37,8 +35,6 @@ export default class ChatStore {
     } finally {
       runInAction(() => {
         this.loading = false
-        console.log('loading ' + this.loading)
-        // console.log(toJS(this.chats))
       })
     }
   }
@@ -50,16 +46,11 @@ export default class ChatStore {
         party: chat.party.filter(member => member.id !== this.userId)
       }
     })
-    // console.log(toJS(party))
     // return party.map(members => {
-    //   // console.log(toJS(members.party))
     //
     //   return members.party.map(item => {
     //
     //     return item.filter(member => {
-    //       // console.log(toJS(member))
-    //       // console.log(member.id)
-    //       // console.log(member.id !== userId)
     //       return member.id !== this.userId
     //     })
     //   })
@@ -76,8 +67,6 @@ export default class ChatStore {
       : []
 
     // return this.chats.filter(chat => {
-    // console.log(toJS(chat))
-    // console.log(this.currentChatId)
     // return chat._id === this.currentChatId
     // return chat._id === this.currentChatId
     // })
@@ -86,18 +75,16 @@ export default class ChatStore {
   async addMessage (content, chatId = this.currentChatId) {
     try {
       const response = await ChatService.addMessage(content, chatId)
-      console.log(response.data)
 
       runInAction(() => {
         this.chats = this.chats.map(chat => chat._id === chatId ? Object.assign({}, response.data) : chat)
-          // if (chat._id === chatId) {
-          //   console.log(chat)
-          //   chat = response.data
-          //   console.log(chat)
-          // }
-          // return chat._id === chatId ? Object.assign({}, response.data) : null
+        // if (chat._id === chatId) {
+        //   console.log(chat)
+        //   chat = response.data
+        //   console.log(chat)
+        // }
+        // return chat._id === chatId ? Object.assign({}, response.data) : null
 
-        console.log(toJS(this.chats))
       })
     } catch (e) {
       runInAction(() => {

@@ -7,6 +7,7 @@ export default class UserStore {
   user = {}
   isAuth = false
   isLoading = false
+  isError = false
   rootStore
 
   constructor (rootStore) {
@@ -26,15 +27,20 @@ export default class UserStore {
     this.isLoading = bool
   }
 
-  async signUp(name, email, password) {
+  setErrors(bool) {
+    this.isErrors = bool
+  }
 
+  async signUp(firstName, lastName, email, password) {
     this.setLoading(true)
     try {
-      const response = await AuthService.signUp(name, email, password)
+      const response = await AuthService.signUp(firstName, lastName, email, password)
       localStorage.setItem('accessToken', response.data.accessToken)
       this.setAuth(true)
       this.setUser(response.data.user)
+      this.setErrors(false)
     } catch (e) {
+      this.setErrors(true)
       console.log(e.response?.data?.message)
     } finally {
       this.setLoading(false)
@@ -48,7 +54,9 @@ export default class UserStore {
       localStorage.setItem('accessToken', response.data.accessToken)
       this.setAuth(true)
       this.setUser(response.data.user)
+      this.setErrors(false)
     } catch (e) {
+      this.setErrors(true)
       console.log(e.response?.data?.message)
     } finally {
       this.setLoading(false)
@@ -56,13 +64,18 @@ export default class UserStore {
   }
 
   async signOut() {
+    this.setLoading(true)
     try {
       await AuthService.signOut()
       localStorage.removeItem('accessToken')
       this.setAuth(false)
       this.setUser({})
+      this.setErrors(false)
     } catch (e) {
+      this.setErrors(true)
       console.log(e.response?.data?.message)
+    } finally {
+      this.setLoading(false)
     }
   }
 
@@ -73,7 +86,9 @@ export default class UserStore {
       localStorage.setItem('accessToken', response.data.accessToken)
       this.setAuth(true)
       this.setUser(response.data.user)
+      this.setErrors(false)
     } catch (e) {
+      this.setErrors(true)
       console.log(e.response?.data?.message)
     } finally {
       this.setLoading(false)

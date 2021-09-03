@@ -2,11 +2,10 @@ import React, { useContext, useEffect, useState } from 'react'
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
 import Message from '../Message'
 import styles from './Message-list.module.css'
-import Button from '../Button'
-import InputText from '../InputText'
+// import Button from '../Button'
+// import InputText from '../InputText'
 import { Context } from '../../index'
 import { observer } from 'mobx-react-lite'
-import { autorun, toJS } from 'mobx'
 
 function MessageList () {
   const { chatStore } = useContext(Context)
@@ -14,9 +13,8 @@ function MessageList () {
   // const chat = chatStore.chats.filter(chat => chat._id === chatStore.currentChatId)
   // const messages = chat[0]?.messages
 
-  const [inputText, setInputText] = useState({
-    content: ''
-  })
+  const [inputText, setInputText] = useState({content: ''})
+  // console.log(inputText)
   // const [isDisabled, setIsDisabled] = useState(true)
   // const [isScrollButtonVisible, setIsScrollButtonVisible] = useState({display: 'none'})
 
@@ -66,22 +64,23 @@ function MessageList () {
   //
   // }, [list])
 
-  const handleChange = (e) => {
-    setInputText({
-      content: e.target.value
-    })
+  // const handleChange = (e) => {
+  //   setInputText({
+  //     content: e.target.value
+  //   })
     // setIsDisabled(e.target.value === '')
-  }
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter' && e.target.value !== '') {
-      handleClick()
-    }
-  }
-  const handleClick = () => {
-    chatStore.addMessage(inputText)
-    setInputText({ content: '' })
-    // setIsDisabled(true)
-  }
+  // }
+  // const handleKeyPress = (e) => {
+  //   if (e.key === 'Enter' && e.target.value !== '') {
+  //     handleClick()
+  //   }
+  // }
+  // const handleClick = () => {
+  //   chatStore.addMessage(inputText)
+  //   setInputText({ content: '' })
+  //   console.log(inputText)
+  //   // setIsDisabled(true)
+  // }
 
   // const handleScroll = () => {
   //   // const target = scrollTo.current
@@ -96,50 +95,50 @@ function MessageList () {
   //   }
   // }
 
-  useEffect(() => {
-    console.log('render')
-    // chatStore.getCurrentChat()
-  }, [])
+  // useEffect(() => {
+  //   console.log('render')
+  //   // chatStore.getCurrentChat()
+  // }, [])
 
   // console.log(toJS(chatStore.getCurrentChatMessages))
 
   return (
     <>
-      <div className={styles.container}>
-        <div className={styles.messageList}
-          // ref={messageList}
-        >
-          {chatStore.getCurrentChatMessages.length === 0 &&
-          <div className={styles.empty}><span>No messages</span></div>}
-          {chatStore.getCurrentChatMessages.map(message => (
-            <Message key={message._id} message={message}/>
-          ))}
-          {/*<div ref={scrollTo}/>*/}
-        </div>
+      {/*<div className={styles.container}>*/}
+      {/*  <div className={styles.messageList}*/}
+      {/*    // ref={messageList}*/}
+      {/*  >*/}
+      {/*    {chatStore.getCurrentChatMessages.length === 0 &&*/}
+      {/*    <div className={styles.empty}><span>No messages</span></div>}*/}
+      {/*    {chatStore.getCurrentChatMessages.map(message => (*/}
+      {/*      <Message key={message._id} message={message}/>*/}
+      {/*    ))}*/}
+      {/*    /!*<div ref={scrollTo}/>*!/*/}
+      {/*  </div>*/}
 
-        <button
-          // onClick={handleScroll}
-          // style={isScrollButtonVisible}
-          className={styles.scrollButton}
-        ><ArrowDownwardIcon/>
-        </button>
+      {/*  <button*/}
+      {/*    // onClick={handleScroll}*/}
+      {/*    // style={isScrollButtonVisible}*/}
+      {/*    className={styles.scrollButton}*/}
+      {/*  ><ArrowDownwardIcon/>*/}
+      {/*  </button>*/}
 
-        <div className={styles.input}>
-          <InputText
-            classes={styles.text}
-            value={inputText.text}
-            onChange={handleChange}
-            onKeyPress={handleKeyPress}
-          />
-          <Button
-            classes={styles.button}
-            // icon={'send'}
-            title="Send"
-            onClick={handleClick}
-            // disabled={isDisabled}
-          />
-        </div>
-      </div>
+      {/*  <div className={styles.input}>*/}
+      {/*    /!*<InputText*!/*/}
+      {/*    /!*  classes={styles.text}*!/*/}
+      {/*    /!*  value={inputText.text}*!/*/}
+      {/*    /!*  onChange={handleChange}*!/*/}
+      {/*    /!*  onKeyPress={handleKeyPress}*!/*/}
+          {/*/>*/}
+      {/*    /!*<Button*!/*/}
+      {/*    /!*  classes={styles.button}*!/*/}
+      {/*    /!*  // icon={'send'}*!/*/}
+      {/*    /!*  title="Send"*!/*/}
+      {/*    /!*  onClick={handleClick}*!/*/}
+      {/*    /!*  // disabled={isDisabled}*!/*/}
+          {/*/>*/}
+      {/*  </div>*/}
+      {/*</div>*/}
     </>
   )
 }

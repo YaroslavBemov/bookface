@@ -3,12 +3,9 @@ import ChatList from '../ChatList'
 import MessageList from '../MessageList'
 import { Context } from '../../index'
 import { observer } from 'mobx-react-lite'
-import { useDispatch, useSelector } from 'react-redux'
-import { fetchChats, chatsSelector } from '../../slices/chats'
-import { toJS } from 'mobx'
 
-const Chat = () => {
-  const { chatStore, userStore } = useContext(Context)
+const ChatComponent = () => {
+  const { chatStore } = useContext(Context)
 
   useEffect(() => {
     chatStore.getChats()
@@ -39,7 +36,7 @@ const Chat = () => {
     <section>
       <h1>Chats</h1>
       {renderChats()}
-      <MessageList/>
+      {/*<MessageList/>*/}
     </section>
   )
 
@@ -59,4 +56,4 @@ const Chat = () => {
   // )
 }
 
-export default observer(Chat)
+export default observer(ChatComponent)
