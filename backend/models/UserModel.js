@@ -9,4 +9,4 @@ const UserSchema = new Schema({
   isActivated: {type: Boolean, default: false}
 })
 
-module.exports = model('User', UserSchema)
+module.exports = model('Users', UserSchema)

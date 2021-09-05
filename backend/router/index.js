@@ -11,7 +11,8 @@ const authMiddleware = require('../middleware/AuthMiddleware')
 const router = new Router()
 
 router.post('/signup',
-  body('name').isString().isLength({min: 1, max: 32}),
+  body('firstName').isString().isLength({min: 1, max: 32}),
+  body('lastName').isString().isLength({min: 1, max: 32}),
   body('email').isEmail(),
   body('password').isLength({ min: 3, max: 32 }),
   AuthController.signUp)
@@ -25,7 +26,8 @@ router.post('/signout', AuthController.signOut)
 router.get('/activate/:link', AuthController.activate)
 router.get('/refresh', AuthController.refresh)
 
-router.get('/users', authMiddleware, UserController.index)
+router.get('/users', UserController.index)
+router.get('/users/:id', UserController.show)
 
 router.get('/articles', authMiddleware, ArticleController.index)
 

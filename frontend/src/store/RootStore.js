@@ -1,15 +1,18 @@
 import UserStore from './UserStore'
-import ArticleStore from './ArticleStore'
+import UsersStore from './UsersStore'
 import ChatStore from './ChatStore'
+import ArticleStore from './ArticleStore'
 
 export default class RootStore {
   userStore
-  articleStore
+  usersStore
   chatStore
+  articleStore
 
-  constructor () {
+  constructor() {
     this.userStore = new UserStore(this)
-    this.articleStore = new ArticleStore(this)
+    this.usersStore = new UsersStore(this)
     this.chatStore = new ChatStore(this)
+    this.articleStore = new ArticleStore(this)
   }
 }

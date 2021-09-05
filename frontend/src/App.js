@@ -17,6 +17,7 @@ import SignIn from './pages/SignIn'
 import Articles from './pages/Articles'
 import Profile from './pages/Profile'
 import Users from './pages/Users'
+import UserPage from './pages/UserPage'
 
 function App () {
   const { userStore } = useContext(Context)
@@ -46,6 +47,7 @@ function App () {
 
           <Route path="/" component={Main} exact/>
           <Route path="/users" component={Users} exact/>
+          <Route path="/users/:id" component={UserPage} exact/>
           <Route path="/articles" component={Articles}/>
           <Route path="/signin" component={SignIn} exact/>
           <Route path="/signup" component={SignUp} exact/>

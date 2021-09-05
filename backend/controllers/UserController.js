@@ -7,8 +7,20 @@ class UserController {
       if (!users) {
         return res.json('No users')
       }
-
       return res.json(users)
+    } catch (e) {
+      next(e)
+    }
+  }
+
+  async show(req, res, next) {
+    try {
+      const id = req.params.id
+      const user = await UserService.getUser(id)
+      if (!user) {
+        return res.json('No user')
+      }
+      return res.json(user)
     } catch (e) {
       next(e)
     }

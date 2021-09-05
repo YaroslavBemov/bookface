@@ -5,11 +5,11 @@ import App from './App'
 import reportWebVitals from './reportWebVitals'
 import RootStore from './store/RootStore'
 
-import { configureStore } from '@reduxjs/toolkit'
-import { Provider } from 'react-redux'
-import rootReducer from './slices'
+// import { configureStore } from '@reduxjs/toolkit'
+// import { Provider } from 'react-redux'
+// import rootReducer from './slices'
 
-const store = configureStore({ reducer: rootReducer })
+// const store = configureStore({ reducer: rootReducer })
 
 const rootStore = new RootStore()
 
@@ -18,9 +18,9 @@ export const Context = createContext(rootStore)
 ReactDOM.render(
   <React.StrictMode>
     <Context.Provider value={rootStore}>
-      <Provider store={store}>
+      {/*<Provider store={store}>*/}
         <App/>
-      </Provider>
+      {/*</Provider>*/}
     </Context.Provider>
 
   </React.StrictMode>,

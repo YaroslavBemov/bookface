@@ -7,14 +7,14 @@ const Articles = () => {
   const getArticles = () => {
     let articles = []
     for (let i = 0; i < 15; i++) {
-      articles.push(<Grid item lg={4} md={6} xs={12}><Article/></Grid>)
+      articles.push(<Grid item md={12} xs={12}><Article/></Grid>)
     }
 
     return articles
   }
 
   return (
-    <>
+    <Container maxWidth="md">
       <Box
         sx={{
           backgroundColor: 'background.default',
@@ -31,7 +31,7 @@ const Articles = () => {
           ))}
         </Grid>
       </Box>
-    </>
+    </Container>
   )
 }
 

@@ -15,6 +15,16 @@ class UserService {
     return {users}
   }
 
+  async getUser(id) {
+    const data = await UserModel.findOne({_id: id})
+    if (!data) {
+      throw ApiError.badRequest('Пользователь не найден')
+    }
+    const user =  new UserDTO(data)
+
+    return {user}
+  }
+
   async signUp (firstName, lastName, email, password) {
     const candidate = await UserModel.findOne({ email })
     if (candidate) {
