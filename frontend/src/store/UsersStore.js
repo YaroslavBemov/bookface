@@ -5,20 +5,26 @@ export default class UsersStore {
   rootStore
   users = []
   user = {}
+  noUsers = false
   isLoading = false
   isErrors = false
 
-  constructor(rootStore) {
+  constructor (rootStore) {
     makeAutoObservable(this)
     this.rootStore = rootStore
   }
 
-  async getUsers() {
+  async getUsers () {
     this.setLoading(true)
     try {
       const response = await UserService.getUsers()
-      this.setUsers(response)
-      this.setErrors(false)
+      if (response === 'No users') {
+        this.setNoUsers(true)
+      } else {
+        this.setUsers(response)
+        this.setNoUsers(false)
+        this.setErrors(false)
+      }
     } catch (e) {
       this.setErrors(e)
       console.log(e.response?.data?.message)
@@ -27,7 +33,7 @@ export default class UsersStore {
     }
   }
 
-  async getUser(id) {
+  async getUser (id) {
     this.setLoading(true)
     try {
       const response = await UserService.getUser(id)
@@ -41,19 +47,28 @@ export default class UsersStore {
     }
   }
 
-  setUsers(users) {
+  get getUsersList () {
+    const userId = this.rootStore.userStore.user.id
+    return this.users.filter(user => user.id !== userId)
+  }
+
+  setUsers (users) {
     this.users = users
   }
 
-  setUser(user) {
+  setUser (user) {
     this.user = user
   }
 
-  setLoading(bool) {
+  setLoading (bool) {
     this.isLoading = bool
   }
 
-  setErrors(bool) {
+  setErrors (bool) {
     this.isErrors = bool
+  }
+
+  setNoUsers (bool) {
+    this.noUsers = bool
   }
 }

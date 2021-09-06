@@ -4,7 +4,7 @@ class ChatService {
   async getUserChats (userId) {
     const chats = await ChatModel.find({ 'party.id': userId })
     if (+chats.length === 0) {
-      return { message: 'No chats' }
+      return { chats: 'No chats' }
     }
 
     return { chats }

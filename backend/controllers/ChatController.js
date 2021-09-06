@@ -16,7 +16,7 @@ class ChatController {
     try {
       const {toId, toName, content} = req.body
       const fromId = req.user.id
-      const fromName= req.user.name
+      const fromName= req.user.firstName + ' ' + req.user.lastName
       const chat = await ChatService.storeChat(fromId, fromName, toId, toName, content)
 
       return res.json(chat)

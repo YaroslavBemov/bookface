@@ -10,6 +10,9 @@ const uuid = require('uuid')
 class UserService {
   async getAllUsers() {
     const data = await UserModel.find()
+    if (+data.length === 0) {
+      return { users: 'No users' }
+    }
     const users = data.map(user => new UserDTO(user))
 
     return {users}

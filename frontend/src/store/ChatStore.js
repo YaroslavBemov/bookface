@@ -4,10 +4,10 @@ import ChatService from '../services/ChatService'
 export default class ChatStore {
   rootStore
   chats = []
+  noChats = false
   currentChatId = ''
-  loading = false
-  hasErrors = false
-  userId
+  isLoading = false
+  isErrors = false
 
   constructor (rootStore) {
     makeAutoObservable(this)
@@ -15,61 +15,31 @@ export default class ChatStore {
   }
 
   async getChats () {
-    runInAction(() => {
-      this.loading = true
-      this.hasErrors = false
-    })
+    this.setLoading(true)
+
     try {
-      const userId = await this.rootStore.userStore.user.id
-      const response = await ChatService.getChats(userId)
-      runInAction(() => {
-        this.userId = userId
-        this.chats = response.data.chats
-        // this.chatList = this.getChatList
-      })
+      const response = await ChatService.getChats()
+      if (response === 'No chats') {
+        this.setNoChats(true)
+      } else {
+        this.setChats(response)
+        this.setNoChats(false)
+        this.setErrors(false)
+      }
     } catch (e) {
       console.log(e)
-      runInAction(() => {
-        this.hasErrors = true
-      })
+      this.setErrors(true)
     } finally {
-      runInAction(() => {
-        this.loading = false
-      })
+      this.setLoading(false)
     }
   }
 
-  get getChatList () {
-    return this.chats.map(chat => {
-      return {
-        id: chat._id,
-        party: chat.party.filter(member => member.id !== this.userId)
-      }
-    })
-    // return party.map(members => {
-    //
-    //   return members.party.map(item => {
-    //
-    //     return item.filter(member => {
-    //       return member.id !== this.userId
-    //     })
-    //   })
-    // })
-  }
+  addChat(withId, withName, content) {
+    console.log(withId, withName, content)
+    //проверить есть ли уже такой чат
+    //если есть, редирект на чат
+    //если нет, добавить чат в список и редирект на чат
 
-  setCurrentChatId (chatId) {
-    this.currentChatId = chatId
-  }
-
-  get getCurrentChatMessages () {
-    return this.currentChatId !== ''
-      ? this.chats.filter(chat => chat._id === this.currentChatId)[0].messages
-      : []
-
-    // return this.chats.filter(chat => {
-    // return chat._id === this.currentChatId
-    // return chat._id === this.currentChatId
-    // })
   }
 
   async addMessage (content, chatId = this.currentChatId) {
@@ -91,5 +61,47 @@ export default class ChatStore {
         console.log(e)
       })
     }
+  }
+
+  get getChatList () {
+    const userId = this.rootStore.userStore.user.id
+    return this.chats.map(chat => {
+      return {
+        id: chat._id,
+        party: chat.party.filter(member => member.id !== userId)
+      }
+    })
+  }
+
+  get getCurrentChatMessages () {
+    return this.currentChatId !== ''
+      ? this.chats.filter(chat => chat._id === this.currentChatId)[0].messages
+      : []
+
+    // return this.chats.filter(chat => {
+    // return chat._id === this.currentChatId
+    // return chat._id === this.currentChatId
+    // })
+  }
+
+
+  setCurrentChatId (id) {
+    this.currentChatId = id
+  }
+
+  setLoading (bool) {
+    this.isLoading = bool
+  }
+
+  setErrors (bool) {
+    this.isErrors = bool
+  }
+
+  setChats (chats) {
+    this.chats = chats
+  }
+
+  setNoChats (bool) {
+    this.noChats = bool
   }
 }

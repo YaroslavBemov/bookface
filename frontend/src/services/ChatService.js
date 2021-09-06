@@ -1,8 +1,9 @@
 import $api from '../http'
 
 export default class ChatService {
-  static async getChats(userId) {
-    return await $api.get('/chats')
+  static async getChats() {
+    const response = await $api.get('/chats')
+    return response.data.chats
   }
 
   static async addMessage(content, chatId) {
