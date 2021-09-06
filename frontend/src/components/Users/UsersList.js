@@ -84,7 +84,11 @@ const RecipeReviewCard = ({ user }) => {
 
   const sendMessageClickHandler = (e) => {
     e.stopPropagation()
-
+    const chatId = chatStore.getChatIdWithUser(user.id)
+    if (chatId) {
+      chatStore.setCurrentChatId(chatId)
+      history.push('/chat')
+    }
     handleOpen()
   }
 

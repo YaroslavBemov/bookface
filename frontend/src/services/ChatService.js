@@ -9,4 +9,8 @@ export default class ChatService {
   static async addMessage(content, chatId) {
     return await $api.post(`/chats/${chatId}`, content)
   }
+
+  static async addChat(withId, withName, content) {
+    return await $api.post('/chats', {withId, withName, content})
+  }
 }

@@ -10,11 +10,11 @@ class ChatService {
     return { chats }
   }
 
-  async storeChat (fromId, fromName, toId, toName, content) {
+  async storeChat (fromId, fromName, withId, withName, content) {
 
     const chat = await ChatModel.create({
       owner: fromId,
-      party: [{ id: fromId, name: fromName }, { id: toId, name: toName }],
+      party: [{ id: fromId, name: fromName }, { id: withId, name: withName }],
       messages: [{ author: fromId, name: fromName, content }]
     })
 

@@ -14,10 +14,10 @@ class ChatController {
 
   async storeChat (req, res, next) {
     try {
-      const {toId, toName, content} = req.body
+      const {withId, withName, content} = req.body
       const fromId = req.user.id
       const fromName= req.user.firstName + ' ' + req.user.lastName
-      const chat = await ChatService.storeChat(fromId, fromName, toId, toName, content)
+      const chat = await ChatService.storeChat(fromId, fromName, withId, withName, content)
 
       return res.json(chat)
     } catch (e) {

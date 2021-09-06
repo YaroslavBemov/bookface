@@ -1,4 +1,4 @@
-import { makeAutoObservable, runInAction } from 'mobx'
+import { makeAutoObservable, runInAction, toJS } from 'mobx'
 import ChatService from '../services/ChatService'
 
 export default class ChatStore {
@@ -8,6 +8,7 @@ export default class ChatStore {
   currentChatId = ''
   isLoading = false
   isErrors = false
+  isFetched = false
 
   constructor (rootStore) {
     makeAutoObservable(this)
@@ -16,7 +17,6 @@ export default class ChatStore {
 
   async getChats () {
     this.setLoading(true)
-
     try {
       const response = await ChatService.getChats()
       if (response === 'No chats') {
@@ -25,6 +25,7 @@ export default class ChatStore {
         this.setChats(response)
         this.setNoChats(false)
         this.setErrors(false)
+        this.setIsFetched(true)
       }
     } catch (e) {
       console.log(e)
@@ -34,12 +35,21 @@ export default class ChatStore {
     }
   }
 
-  addChat(withId, withName, content) {
+  async addChat (withId, withName, content) {
     console.log(withId, withName, content)
-    //проверить есть ли уже такой чат
-    //если есть, редирект на чат
-    //если нет, добавить чат в список и редирект на чат
+    this.setLoading(true)
 
+    try {
+      const response = await ChatService.addChat(withId, withName, content)
+      runInAction(() => {this.chats.push(response)})
+      this.setNoChats(false)
+      this.setErrors(false)
+    } catch (e) {
+      console.log(e)
+      this.setErrors(true)
+    } finally {
+      this.setLoading(false)
+    }
   }
 
   async addMessage (content, chatId = this.currentChatId) {
@@ -64,13 +74,37 @@ export default class ChatStore {
   }
 
   get getChatList () {
-    const userId = this.rootStore.userStore.user.id
-    return this.chats.map(chat => {
-      return {
-        id: chat._id,
-        party: chat.party.filter(member => member.id !== userId)
-      }
-    })
+    if (this.isChats) {
+      const userId = this.rootStore.userStore.user.id
+      return this.chats.map(chat => {
+        return {
+          id: chat._id,
+          party: chat.party.filter(member => member.id !== userId)
+        }
+      })
+    }
+    return []
+  }
+
+  async getChatIdWithUser (id) {
+    if (!this.isFetched) {
+      await this.getChats()
+        .then(() => {
+          return this.getChatList.map(chat => {
+            return chat.party.find(el => el.id === id)
+          })
+        })
+    }
+    // return this.getChatList.map(chat => {
+    //   console.log(id)
+    //   console.log(toJS(chat))
+    //
+    //   return chat.party.find(id === chat.party.id)
+    // })
+  }
+
+  get isChats () {
+    return this.chats.length > 0
   }
 
   get getCurrentChatMessages () {
@@ -83,7 +117,6 @@ export default class ChatStore {
     // return chat._id === this.currentChatId
     // })
   }
-
 
   setCurrentChatId (id) {
     this.currentChatId = id
@@ -103,5 +136,9 @@ export default class ChatStore {
 
   setNoChats (bool) {
     this.noChats = bool
+  }
+
+  setIsFetched (bool) {
+    this.isFetched = bool
   }
 }
