@@ -8,7 +8,11 @@ export default class UserService {
 
   static async getUser(id) {
     const response = await $api.get(`/users/${id}`)
-    console.log(response.data.user)
+    return response.data.user
+  }
+
+  static async updateProfile(values, id) {
+    const response = await $api.patch(`/users/${id}`, values)
     return response.data.user
   }
 }

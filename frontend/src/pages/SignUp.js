@@ -78,6 +78,7 @@ export default function SignUp () {
 
   const signUpClickHandler = () => {
     userStore.signUp(firstName, lastName, email, password)
+    history.push('/')
   }
 
 

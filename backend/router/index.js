@@ -28,6 +28,7 @@ router.get('/refresh', AuthController.refresh)
 
 router.get('/users', UserController.index)
 router.get('/users/:id', UserController.show)
+router.patch('/users/:id', UserController.update)
 
 router.get('/articles', authMiddleware, ArticleController.index)
 

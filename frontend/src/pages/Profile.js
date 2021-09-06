@@ -1,11 +1,9 @@
-import React, { useContext } from 'react'
-import { Context } from '../index'
-import { Box, Container, Grid } from '@material-ui/core'
+import React from 'react'
+import { Box, Grid } from '@material-ui/core'
 import ProfileInfo from '../components/Profile/ProfileInfo'
 import ProfileDetails from '../components/Profile/ProfileDetails'
 
 const Profile = () => {
-  const { userStore } = useContext(Context)
 
   return (
     <>

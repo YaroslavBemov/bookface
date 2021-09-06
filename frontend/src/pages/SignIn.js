@@ -69,6 +69,12 @@ export default function SignIn () {
     history.push('/')
   }
 
+  const passwordKeyPressHandler = (e) => {
+    if (e.key === 'Enter' && e.target.value !== '') {
+      signInClickHandler()
+    }
+  }
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline/>
@@ -96,6 +102,7 @@ export default function SignIn () {
           <TextField
             value={password}
             onChange={passwordChangeHandler}
+            onKeyPress={passwordKeyPressHandler}
             variant="outlined"
             margin="normal"
             required

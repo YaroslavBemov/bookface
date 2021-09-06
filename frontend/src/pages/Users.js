@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react'
-import { Box, Container, Grid } from '@material-ui/core'
+import { Box, CircularProgress, Container, Grid } from '@material-ui/core'
 import UsersList from '../components/Users'
+import ErrorSnackbar from '../components/Error'
 import { Context } from '../index'
 import { observer } from 'mobx-react-lite'
 
@@ -12,8 +13,8 @@ const Users = () => {
   }, [usersStore])
 
   const renderUsers = () => {
-    if (usersStore.isLoading) return <div>Loading...</div>
-    if (usersStore.isErrors) return <div>Errors...</div>
+    if (usersStore.isLoading) return <CircularProgress />
+    if (usersStore.isErrors) return <div>Error...</div>
 
     return usersStore.users.map(user => (
       <Grid item md={12} xs={12}>

@@ -25,6 +25,18 @@ class UserService {
     return {user}
   }
 
+  async updateUser(values, id) {
+    const filter = {_id: id}
+    const options = {new: true}
+    const data = await UserModel.findOneAndUpdate(filter, values, options)
+    if (!data) {
+      throw ApiError.badRequest('Пользователь не найден')
+    }
+    const user =  new UserDTO(data)
+
+    return {user}
+  }
+
   async signUp (firstName, lastName, email, password) {
     const candidate = await UserModel.findOne({ email })
     if (candidate) {

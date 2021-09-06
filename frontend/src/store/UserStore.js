@@ -2,6 +2,7 @@ import { makeAutoObservable } from 'mobx'
 import AuthService from '../services/AuthService'
 import axios from 'axios'
 import { API_URL } from '../http'
+import UserService from '../services/UserService'
 
 export default class UserStore {
   user = {}
@@ -86,6 +87,20 @@ export default class UserStore {
       localStorage.setItem('accessToken', response.data.accessToken)
       this.setAuth(true)
       this.setUser(response.data.user)
+      this.setErrors(false)
+    } catch (e) {
+      this.setErrors(true)
+      console.log(e.response?.data?.message)
+    } finally {
+      this.setLoading(false)
+    }
+  }
+
+  async updateProfile(values) {
+    this.setLoading(true)
+    try {
+      const response = await UserService.updateProfile(values, this.user.id)
+      this.setUser(response)
       this.setErrors(false)
     } catch (e) {
       this.setErrors(true)

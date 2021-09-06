@@ -8,65 +8,73 @@ import {
   Divider,
   Typography
 } from '@material-ui/core'
+import { useContext } from 'react'
+import { Context } from '../../index'
+import { observer } from 'mobx-react-lite'
 
-const user = {
-  avatar: '/static/images/avatars/avatar_6.png',
-  city: 'Los Angeles',
-  country: 'USA',
-  jobTitle: 'Senior Developer',
-  name: 'Katarina Smith',
-  timezone: 'GTM-7'
+
+const ProfileInfo = () => {
+  const {userStore} = useContext(Context)
+
+
+  return (
+    <Card>
+      <CardContent>
+        <Box
+          sx={{
+            alignItems: 'center',
+            display: 'flex',
+            flexDirection: 'column'
+          }}
+        >
+          <Avatar
+            src={userStore.user.avatar}
+            sx={{
+              height: 100,
+              width: 100
+            }}
+          />
+          <Typography
+            color="textPrimary"
+            gutterBottom
+            variant="h3"
+          >
+            {userStore.user.firstName}
+          </Typography>
+          <Typography
+            color="textPrimary"
+            gutterBottom
+            variant="h3"
+          >
+            {userStore.user.lastName}
+          </Typography>
+          {/*<Typography*/}
+          {/*  color="textSecondary"*/}
+          {/*  variant="body1"*/}
+          {/*>*/}
+          {/*  {`${user.city} ${user.country}`}*/}
+          {/*</Typography>*/}
+          {/*<Typography*/}
+          {/*  color="textSecondary"*/}
+          {/*  variant="body1"*/}
+          {/*>*/}
+          {/*  Date time*/}
+          {/*</Typography>*/}
+        </Box>
+      </CardContent>
+      <Divider/>
+      <CardActions>
+        <Button
+          color="primary"
+          fullWidth
+          variant="text"
+          disabled={true}
+        >
+          Upload picture
+        </Button>
+      </CardActions>
+    </Card>
+  )
 }
 
-const ProfileInfo = (props) => (
-  <Card {...props}>
-    <CardContent>
-      <Box
-        sx={{
-          alignItems: 'center',
-          display: 'flex',
-          flexDirection: 'column'
-        }}
-      >
-        <Avatar
-          src={user.avatar}
-          sx={{
-            height: 100,
-            width: 100
-          }}
-        />
-        <Typography
-          color="textPrimary"
-          gutterBottom
-          variant="h3"
-        >
-          {user.name}
-        </Typography>
-        <Typography
-          color="textSecondary"
-          variant="body1"
-        >
-          {`${user.city} ${user.country}`}
-        </Typography>
-        <Typography
-          color="textSecondary"
-          variant="body1"
-        >
-          Date time
-        </Typography>
-      </Box>
-    </CardContent>
-    <Divider/>
-    <CardActions>
-      <Button
-        color="primary"
-        fullWidth
-        variant="text"
-      >
-        Upload picture
-      </Button>
-    </CardActions>
-  </Card>
-)
-
-export default ProfileInfo
+export default observer(ProfileInfo)

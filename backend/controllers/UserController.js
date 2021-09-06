@@ -25,6 +25,21 @@ class UserController {
       next(e)
     }
   }
+
+  async update(req, res, next) {
+    try {
+      const id = req.params.id
+      const values = req.body
+      const user = await UserService.updateUser(values, id)
+      if (!user) {
+        return res.json('No user')
+      }
+
+      return res.json(user)
+    } catch (e) {
+      next(e)
+    }
+  }
 }
 
 module.exports = new UserController()
