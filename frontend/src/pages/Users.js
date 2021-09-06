@@ -5,10 +5,11 @@ import { Context } from '../index'
 import { observer } from 'mobx-react-lite'
 
 const Users = () => {
-  const {usersStore} = useContext(Context)
+  const {usersStore, chatStore} = useContext(Context)
 
   useEffect(() => {
     usersStore.getUsers()
+    chatStore.getChats()
   }, [usersStore])
 
   const renderUsers = () => {

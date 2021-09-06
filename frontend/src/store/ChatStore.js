@@ -86,22 +86,19 @@ export default class ChatStore {
     return []
   }
 
-  async getChatIdWithUser (id) {
-    if (!this.isFetched) {
-      await this.getChats()
-        .then(() => {
-          return this.getChatList.map(chat => {
-            return chat.party.find(el => el.id === id)
-          })
-        })
-    }
-    // return this.getChatList.map(chat => {
-    //   console.log(id)
-    //   console.log(toJS(chat))
-    //
-    //   return chat.party.find(id === chat.party.id)
-    // })
+  getChatIdWithUser (id) {
+    const result = this.getChatList.map(chat => {
+      return chat.party.find(el => el.id === id)
+    })
+    return result.length > 0 ? result : null
   }
+
+  // return this.getChatList.map(chat => {
+  //   console.log(id)
+  //   console.log(toJS(chat))
+  //
+  //   return chat.party.find(id === chat.party.id)
+  // })
 
   get isChats () {
     return this.chats.length > 0
