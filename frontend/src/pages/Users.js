@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import { Box, CircularProgress, Container, Grid } from '@material-ui/core'
-import UsersList from '../components/Users'
+import UsersList from '../components/UsersList'
 import { Context } from '../index'
 import { observer } from 'mobx-react-lite'
 
