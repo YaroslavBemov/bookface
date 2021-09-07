@@ -1,4 +1,4 @@
-import { makeAutoObservable, runInAction, toJS } from 'mobx'
+import { makeAutoObservable, runInAction } from 'mobx'
 import ChatService from '../services/ChatService'
 
 export default class ChatStore {
@@ -36,7 +36,6 @@ export default class ChatStore {
   }
 
   async addChat (withId, withName, content) {
-    console.log(withId, withName, content)
     this.setLoading(true)
 
     try {
@@ -55,16 +54,8 @@ export default class ChatStore {
   async addMessage (content, chatId = this.currentChatId) {
     try {
       const response = await ChatService.addMessage(content, chatId)
-
       runInAction(() => {
         this.chats = this.chats.map(chat => chat._id === chatId ? Object.assign({}, response.data) : chat)
-        // if (chat._id === chatId) {
-        //   console.log(chat)
-        //   chat = response.data
-        //   console.log(chat)
-        // }
-        // return chat._id === chatId ? Object.assign({}, response.data) : null
-
       })
     } catch (e) {
       runInAction(() => {
@@ -90,29 +81,22 @@ export default class ChatStore {
     const result = this.getChatList.map(chat => {
       return chat.party.find(el => el.id === id)
     })
-    return result.length > 0 ? result : null
+    return result.length > 0 ? result[0].id : null
   }
-
-  // return this.getChatList.map(chat => {
-  //   console.log(id)
-  //   console.log(toJS(chat))
-  //
-  //   return chat.party.find(id === chat.party.id)
-  // })
 
   get isChats () {
     return this.chats.length > 0
   }
 
   get getCurrentChatMessages () {
-    return this.currentChatId !== ''
-      ? this.chats.filter(chat => chat._id === this.currentChatId)[0].messages
+    const result = this.currentChatId !== ''
+      ? this.chats.filter(chat => chat._id === this.currentChatId)
       : []
-
-    // return this.chats.filter(chat => {
-    // return chat._id === this.currentChatId
-    // return chat._id === this.currentChatId
-    // })
+    if (result.length > 0) {
+      return result[0].messages
+    }
+    console.log(result)
+    return result
   }
 
   setCurrentChatId (id) {

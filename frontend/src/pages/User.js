@@ -1,18 +1,15 @@
 import {
   Avatar,
   Box,
-  Button,
   Card,
-  CardActions,
-  CardContent, CircularProgress,
-  Divider,
+  CardContent,
+  CircularProgress,
   Typography
 } from '@material-ui/core'
 import { useContext, useEffect } from 'react'
 import { Context } from '../index'
 import { makeStyles } from '@material-ui/core/styles'
 import { observer } from 'mobx-react-lite'
-import ErrorSnackbar from '../components/Error'
 //
 // const user = {
 //   avatar: '/static/images/avatars/avatar_6.png',
@@ -36,7 +33,7 @@ const ProfileInfo = ({match}) => {
 
   useEffect(() => {
     usersStore.getUser(id)
-  }, [])
+  }, [usersStore, id])
 
   const renderUser = () => {
     if (usersStore.isLoading) return <CircularProgress/>

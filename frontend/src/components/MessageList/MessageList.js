@@ -1,19 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react'
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
-import Message from '../Message'
-import styles from './Message-list.module.css'
+import React from 'react'
 // import Button from '../Button'
 // import InputText from '../InputText'
-import { Context } from '../../index'
-import { observer } from 'mobx-react-lite'
 
-function MessageList () {
-  const { chatStore } = useContext(Context)
+function MessageList ({message}) {
+  // console.log(message)
   // const currentChatId = chatStore.currentChatId
   // const chat = chatStore.chats.filter(chat => chat._id === chatStore.currentChatId)
   // const messages = chat[0]?.messages
 
-  const [inputText, setInputText] = useState({content: ''})
+  // const [inputText, setInputText] = useState({content: ''})
   // console.log(inputText)
   // const [isDisabled, setIsDisabled] = useState(true)
   // const [isScrollButtonVisible, setIsScrollButtonVisible] = useState({display: 'none'})
@@ -103,7 +98,8 @@ function MessageList () {
   // console.log(toJS(chatStore.getCurrentChatMessages))
 
   return (
-    <>
+    <div>
+      {message.content}
       {/*<div className={styles.container}>*/}
       {/*  <div className={styles.messageList}*/}
       {/*    // ref={messageList}*/}
@@ -139,8 +135,8 @@ function MessageList () {
           {/*/>*/}
       {/*  </div>*/}
       {/*</div>*/}
-    </>
+    </div>
   )
 }
 
-export default observer(MessageList)
+export default MessageList

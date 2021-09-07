@@ -10,7 +10,7 @@ const Users = () => {
   useEffect(() => {
     usersStore.getUsers()
     chatStore.getChats()
-  }, [usersStore])
+  }, [usersStore, chatStore])
 
   const renderUsers = () => {
     if (usersStore.isLoading) return <CircularProgress />

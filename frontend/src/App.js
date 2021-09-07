@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Container from '@material-ui/core/Container'
@@ -51,6 +51,7 @@ function App () {
           <Route path="/articles" component={Articles}/>
           <Route path="/signin" component={SignIn} exact/>
           <Route path="/signup" component={SignUp} exact/>
+          <Redirect to="/"/>
         </Switch>
       </Container>
     </BrowserRouter>

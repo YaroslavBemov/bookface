@@ -10,9 +10,9 @@ export default function PositionedSnackbar ({message}) {
 
   const { vertical, horizontal, open } = state
 
-  const handleClick = (newState) => () => {
-    setState({ open: true, ...newState })
-  }
+  // const handleClick = (newState) => () => {
+  //   setState({ open: true, ...newState })
+  // }
 
   const handleClose = () => {
     setState({ ...state, open: false })
