@@ -1,32 +1,37 @@
 import React, { useContext, useEffect } from 'react'
 import { Context } from '../index'
 import {
-  Box,
+  Box, Button,
   Card,
   CircularProgress,
   Container,
   Grid,
-  Paper
+  Paper, TextField
 } from '@material-ui/core'
 import { observer } from 'mobx-react-lite'
 import MessageList from '../components/MessageList'
 import { makeStyles } from '@material-ui/core/styles'
 import CardHeader from '@material-ui/core/CardHeader'
 import Avatar from '@material-ui/core/Avatar'
-import IconButton from '@material-ui/core/IconButton'
 import { red } from '@material-ui/core/colors'
 import clsx from 'clsx'
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    height: 'calc(100vh - 64px)'
+  },
   paper: {
-    flexGrow: 1,
+    // flexGrow: 1,
     padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary
+    margin: theme.spacing(1),
+    // textAlign: 'center',
+    color: theme.palette.text.secondary,
+    maxWidth: '90%'
   },
   chatList: {
     flexGrow: 1,
-    padding: theme.spacing(1)
+    padding: theme.spacing(1),
+    alignContent: 'flex-start'
   },
   chatItem: {
     width: '100%',
@@ -42,16 +47,30 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.action.hover
   },
   messageList: {
-    flexGrow: 1,
-    padding: theme.spacing(1)
+    // flexGrow: 1,
+    padding: theme.spacing(1),
+    height: 'calc(100vh - 64px)',
+    // alignContent: 'flex-end',
+    justifyContent: 'flex-end',
+    flexDirection: 'column'
+  },
+  alignLeft: {
+    alignItems: 'flex-start'
+  },
+  alignRight: {
+    alignItems: 'flex-end'
   },
   avatar: {
     backgroundColor: red[500]
+  },
+  formRoot: {
+    // flexGrow: 1
+    // width: '100%'
   }
 }))
 
 const Chat = () => {
-  const { chatStore } = useContext(Context)
+  const { chatStore, userStore } = useContext(Context)
   const classes = useStyles()
 
   useEffect(() => {
@@ -69,7 +88,6 @@ const Chat = () => {
             className={classes.chatItem}
       >
         <Card
-
           onClick={() => chatStore.setCurrentChatId(chat.id)}
           className={clsx(
             classes.chatCard,
@@ -109,17 +127,24 @@ const Chat = () => {
     if (chatStore.isErrors) return <div>Unable to display messages.</div>
 
     return chatStore.getCurrentChatMessages.map(message => (
-      <Paper key={message._id} className={classes.paper}>
+      <Paper className={classes.paper}>
         <MessageList
           key={message._id}
           message={message}
+          className={message.author === userStore.user.id
+            ? classes.alignRight
+            : classes.alignLeft
+          }
         />
       </Paper>
     ))
   }
 
   return (
-    <Container maxWidth="md">
+    <Container
+      maxWidth="md"
+      className={classes.root}
+    >
       <Box
         sx={{
           backgroundColor: 'background.default',
@@ -127,7 +152,7 @@ const Chat = () => {
           // py: 3
         }}
       >
-        <Grid container spacing={1}>
+        <Grid container spacing={1} style={{ height: '100%' }}>
           <Grid container item xs={4}
             // spacing={3}
                 className={classes.chatList}>
@@ -137,6 +162,29 @@ const Chat = () => {
                 spacing={3}
                 className={classes.messageList}>
             {renderMessageList()}
+            <Grid container>
+              <Grid item style={{flexGrow: 1}}>
+                <form className={classes.formRoot}
+                      noValidate
+                      autoComplete="off">
+                  <TextField
+                    id="filled-multiline-flexible"
+                    label="Message"
+                    multiline
+                    maxRows={4}
+                    // value={value}
+                    // onChange={handleChange}
+                    variant="filled"
+                    style={{width: '100%'}}
+                  />
+                </form>
+              </Grid>
+              <Grid style={{display: 'flex'}}>
+                <Button
+
+                >Send</Button>
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
       </Box>

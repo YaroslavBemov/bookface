@@ -2,7 +2,7 @@ import React from 'react'
 // import Button from '../Button'
 // import InputText from '../InputText'
 
-function MessageList ({message}) {
+function MessageList ({ message }) {
   // console.log(message)
   // const currentChatId = chatStore.currentChatId
   // const chat = chatStore.chats.filter(chat => chat._id === chatStore.currentChatId)
@@ -63,7 +63,7 @@ function MessageList ({message}) {
   //   setInputText({
   //     content: e.target.value
   //   })
-    // setIsDisabled(e.target.value === '')
+  // setIsDisabled(e.target.value === '')
   // }
   // const handleKeyPress = (e) => {
   //   if (e.key === 'Enter' && e.target.value !== '') {
@@ -98,8 +98,13 @@ function MessageList ({message}) {
   // console.log(toJS(chatStore.getCurrentChatMessages))
 
   return (
-    <div>
-      {message.content}
+    <>
+      <div>
+        {message.content}
+      </div>
+      <div>
+        {message.createdAt}
+      </div>
       {/*<div className={styles.container}>*/}
       {/*  <div className={styles.messageList}*/}
       {/*    // ref={messageList}*/}
@@ -125,17 +130,17 @@ function MessageList ({message}) {
       {/*    /!*  value={inputText.text}*!/*/}
       {/*    /!*  onChange={handleChange}*!/*/}
       {/*    /!*  onKeyPress={handleKeyPress}*!/*/}
-          {/*/>*/}
+      {/*/>*/}
       {/*    /!*<Button*!/*/}
       {/*    /!*  classes={styles.button}*!/*/}
       {/*    /!*  // icon={'send'}*!/*/}
       {/*    /!*  title="Send"*!/*/}
       {/*    /!*  onClick={handleClick}*!/*/}
       {/*    /!*  // disabled={isDisabled}*!/*/}
-          {/*/>*/}
+      {/*/>*/}
       {/*  </div>*/}
       {/*</div>*/}
-    </div>
+    </>
   )
 }
 
