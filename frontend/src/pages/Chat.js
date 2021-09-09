@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Context } from '../index'
 import {
   Box, Button,
@@ -71,11 +71,29 @@ const useStyles = makeStyles((theme) => ({
 
 const Chat = () => {
   const { chatStore, userStore } = useContext(Context)
+  const [inputText, setInputText] = useState({content: ''})
   const classes = useStyles()
 
   useEffect(() => {
     chatStore.getChats()
   }, [chatStore])
+
+  const changeInputTextHandler = (e) => {
+    setInputText({
+      content: e.target.value
+    })
+  }
+
+  const keyPressInputHandler = (e) => {
+    if (e.key === 'Enter' && e.target.value !== '') {
+      sendMessageClickHandler()
+    }
+  }
+
+  const sendMessageClickHandler = () => {
+    chatStore.addMessage(inputText)
+    setInputText({ content: '' })
+  }
 
   const renderChatList = () => {
     if (chatStore.isLoading) return <CircularProgress/>
@@ -181,8 +199,9 @@ const Chat = () => {
                     label="Message"
                     multiline
                     maxRows={4}
-                    // value={value}
-                    // onChange={handleChange}
+                    value={inputText.content}
+                    onChange={changeInputTextHandler}
+                    onKeyPress={keyPressInputHandler}
                     variant="filled"
                     style={{width: '100%'}}
                   />
@@ -190,7 +209,7 @@ const Chat = () => {
               </Grid>
               <Grid style={{display: 'flex'}}>
                 <Button
-
+                  onClick={sendMessageClickHandler}
                 >Send</Button>
               </Grid>
             </Grid>
