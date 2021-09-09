@@ -55,10 +55,10 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column'
   },
   alignLeft: {
-    alignItems: 'flex-start'
+    alignSelf: 'flex-start'
   },
   alignRight: {
-    alignItems: 'flex-end'
+    alignSelf: 'flex-end'
   },
   avatar: {
     backgroundColor: red[500]
@@ -127,14 +127,23 @@ const Chat = () => {
     if (chatStore.isErrors) return <div>Unable to display messages.</div>
 
     return chatStore.getCurrentChatMessages.map(message => (
-      <Paper className={classes.paper}>
+      <Paper
+        // className={classes.paper}
+        className={clsx(
+          classes.paper,
+          message.author === userStore.user.id
+            ? classes.alignRight
+            : classes.alignLeft
+        )}
+        // className={message.author === userStore.user.id
+        //   ? classes.alignRight
+        //   : classes.alignLeft
+        // }
+      >
         <MessageList
           key={message._id}
           message={message}
-          className={message.author === userStore.user.id
-            ? classes.alignRight
-            : classes.alignLeft
-          }
+
         />
       </Paper>
     ))
