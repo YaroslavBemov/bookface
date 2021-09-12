@@ -18,7 +18,7 @@ import clsx from 'clsx'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: 'calc(100vh - 64px)'
+    // height: 'calc(100vh - 64px)'
   },
   paper: {
     // flexGrow: 1,
@@ -47,12 +47,15 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.action.hover
   },
   messageList: {
-    // flexGrow: 1,
+    flexGrow: 1,
     padding: theme.spacing(1),
-    height: 'calc(100vh - 64px)',
+    minHeight: 'calc(100vh - 120px)',
+    maxHeight: 'calc(100vh - 173px)',
     // alignContent: 'flex-end',
+    flexWrap: 'nowrap',
     justifyContent: 'flex-end',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    overflowY: 'auto'
   },
   alignLeft: {
     alignSelf: 'flex-start'
@@ -70,7 +73,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Chat = () => {
-  const { chatStore, userStore } = useContext(Context)
+  const {chatStore, userStore} = useContext(Context)
   const [inputText, setInputText] = useState({content: ''})
   const classes = useStyles()
 
@@ -92,7 +95,7 @@ const Chat = () => {
 
   const sendMessageClickHandler = () => {
     chatStore.addMessage(inputText)
-    setInputText({ content: '' })
+    setInputText({content: ''})
   }
 
   const renderChatList = () => {
@@ -179,7 +182,9 @@ const Chat = () => {
           // py: 3
         }}
       >
-        <Grid container spacing={1} style={{ height: '100%' }}>
+        <Grid container spacing={1}
+              style={{height: '100%'}}
+        >
           <Grid container item xs={4}
             // spacing={3}
                 className={classes.chatList}>
@@ -187,8 +192,23 @@ const Chat = () => {
           </Grid>
           <Grid container item xs={8}
                 spacing={3}
-                className={classes.messageList}>
-            {renderMessageList()}
+          >
+            <Grid container item
+                  // className={classes.messageList}
+              style={{
+                flexGrow: 1,
+                // padding: theme.spacing(1),
+                // minHeight: 'calc(100vh - 120px)',
+                maxHeight: 'calc(100vh - 173px)',
+                // alignContent: 'flex-end',
+                flexWrap: 'nowrap',
+                // justifyContent: 'flex-end',
+                flexDirection: 'column',
+                overflowY: 'auto'
+              }}
+            >
+              {renderMessageList()}
+            </Grid>
             <Grid container>
               <Grid item style={{flexGrow: 1}}>
                 <form className={classes.formRoot}
