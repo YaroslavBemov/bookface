@@ -178,8 +178,8 @@ const Chat = () => {
       <Box
         sx={{
           backgroundColor: 'background.default',
-          minHeight: '100%'
-          // py: 3
+          minHeight: '100%',
+          py: 3
         }}
       >
         <Grid container spacing={1}
