@@ -1,6 +1,5 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { observer } from 'mobx-react-lite'
-import { Context } from '../../index'
 import clsx from 'clsx'
 
 import { Avatar, Card, CardHeader, Grid, makeStyles } from '@material-ui/core'
@@ -25,8 +24,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const ChatItem = ({ chat }) => {
-  const { chatStore } = useContext(Context)
+const ChatItem = ({ chat, handler, currentChatId }) => {
   const classes = useStyles()
 
   return (
@@ -35,10 +33,10 @@ const ChatItem = ({ chat }) => {
           className={classes.chatItem}
     >
       <Card
-        onClick={() => chatStore.setCurrentChatId(chat.id)}
+        onClick={() => handler(chat.id)}
         className={clsx(
           classes.chatCard,
-          chatStore.currentChatId === chat.id ? classes.selected : null
+          currentChatId === chat.id ? classes.selected : null
         )}
       >
         <CardHeader
@@ -54,4 +52,4 @@ const ChatItem = ({ chat }) => {
   )
 }
 
-export default observer(ChatItem)
+export default ChatItem

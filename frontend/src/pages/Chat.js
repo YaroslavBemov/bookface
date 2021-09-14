@@ -13,14 +13,8 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     padding: theme.spacing(1),
     alignContent: 'flex-start'
-  },
-  messageList: {
-    flexGrow: 1,
-    maxHeight: 'calc(100vh - 173px)',
-    flexWrap: 'nowrap',
-    flexDirection: 'column',
-    overflowY: 'auto'
   }
+
 }))
 
 const Chat = () => {
@@ -49,11 +43,7 @@ const Chat = () => {
             <ChatList/>
           </Grid>
           <Grid container item xs={8} spacing={3}>
-            <Grid container item
-                  className={classes.messageList}
-            >
-              <MessageList/>
-            </Grid>
+            <MessageList/>
             {chatStore.currentChatId && <MessageInput/>}
           </Grid>
         </Grid>
