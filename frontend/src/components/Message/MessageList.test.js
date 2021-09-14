@@ -1,5 +1,5 @@
 import { act, render } from '@testing-library/react'
-import MessageList from './MessageList'
+import MessageItem from './MessageList'
 import { unmountComponentAtNode } from 'react-dom'
 
 let container = null
@@ -17,6 +17,6 @@ afterEach(() => {
 
 test('renders MessageList component without crashing', () => {
   act(() => {
-    render(<MessageList/>, container)
+    render(<MessageItem/>, container)
   })
 })
