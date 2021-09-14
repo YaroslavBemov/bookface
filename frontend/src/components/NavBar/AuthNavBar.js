@@ -1,16 +1,20 @@
 import React, { useContext } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
-import Button from '@material-ui/core/Button'
-import IconButton from '@material-ui/core/IconButton'
 import { useHistory } from 'react-router-dom'
-import { AccountCircle } from '@material-ui/icons'
-import { Menu, MenuItem } from '@material-ui/core'
-import { Context } from '../../index'
 import { observer } from 'mobx-react-lite'
-import Container from '@material-ui/core/Container'
+import { Context } from '../../index'
+
+import {
+  Menu,
+  MenuItem,
+  Container,
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  IconButton
+} from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
+import { AccountCircle } from '@material-ui/icons'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -74,12 +78,10 @@ function ButtonAppBar () {
       <AppBar position="static">
         <Container maxWidth="md">
           <Toolbar>
-            {/*<IconButton edge="start" className={classes.menuButton}*/}
-            {/*            color="inherit" aria-label="menu">*/}
-            {/*  <MenuIcon/>*/}
-            {/*</IconButton>*/}
-            <Typography variant="h6" className={classes.title}
-                        onClick={logoClickHandler}>
+            <Typography
+              variant="h6"
+              className={classes.title}
+              onClick={logoClickHandler}>
               Bookface
             </Typography>
             <Button color="inherit" onClick={usersClickHandler}>

@@ -8,10 +8,9 @@ import {
   Card,
   CardContent,
   CircularProgress,
-  Typography
+  Typography,
+  makeStyles
 } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
-
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -19,9 +18,8 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-
-const ProfileInfo = ({match}) => {
-  const {usersStore} = useContext(Context)
+const ProfileInfo = ({ match }) => {
+  const { usersStore } = useContext(Context)
   const id = match.params.id
   const classes = useStyles()
 

@@ -1,6 +1,7 @@
 import React from 'react'
 
 import Article from '../components/Article'
+
 import { Box, Container, Grid } from '@material-ui/core'
 
 const Articles = () => {

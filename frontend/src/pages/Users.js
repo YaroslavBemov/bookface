@@ -6,9 +6,8 @@ import UsersItem from '../components/UsersItem'
 
 import { Box, CircularProgress, Container, Grid } from '@material-ui/core'
 
-
 const Users = () => {
-  const {usersStore, chatStore} = useContext(Context)
+  const { usersStore, chatStore } = useContext(Context)
 
   useEffect(() => {
     usersStore.getUsers()
@@ -16,7 +15,7 @@ const Users = () => {
   }, [usersStore, chatStore])
 
   const renderUsers = () => {
-    if (usersStore.isLoading) return <CircularProgress />
+    if (usersStore.isLoading) return <CircularProgress/>
     if (usersStore.noUsers) return <div>No users.</div>
     if (usersStore.isError) return <div>Users error...</div>
 
