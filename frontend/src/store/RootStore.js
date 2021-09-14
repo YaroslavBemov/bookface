@@ -9,7 +9,7 @@ export default class RootStore {
   chatStore
   articleStore
 
-  constructor() {
+  constructor () {
     this.userStore = new UserStore(this)
     this.usersStore = new UsersStore(this)
     this.chatStore = new ChatStore(this)
