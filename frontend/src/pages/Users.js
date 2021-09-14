@@ -6,6 +6,7 @@ import UsersItem from '../components/UsersItem'
 
 import { Box, CircularProgress, Container, Grid } from '@material-ui/core'
 
+
 const Users = () => {
   const {usersStore, chatStore} = useContext(Context)
 
