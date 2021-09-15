@@ -1,5 +1,4 @@
 import React from 'react'
-import { observer } from 'mobx-react-lite'
 import clsx from 'clsx'
 
 import { Avatar, Card, CardHeader, Grid, makeStyles } from '@material-ui/core'

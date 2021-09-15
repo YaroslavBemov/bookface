@@ -21,6 +21,7 @@ const ChatList = () => {
 
     return chatStore.getChatList.map(chat => (
       <ChatItem
+        key={chat.id}
         chat={chat}
         handler={clickHandler}
         currentChatId={currentChatId}

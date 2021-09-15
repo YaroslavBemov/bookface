@@ -10,6 +10,7 @@ import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
 
 const useStyles = makeStyles((theme) => ({
   messageList: {
+    // position: 'relative',
     flexGrow: 1,
     maxHeight: 'calc(100vh - 173px)',
     flexWrap: 'nowrap',
@@ -28,16 +29,48 @@ const useStyles = makeStyles((theme) => ({
   alignRight: {
     alignSelf: 'flex-end'
   },
-  scrollButton: {}
+  scrollButton: {
+    position: 'fixed',
+    left: '58%',
+    bottom: '100px',
+    margin: theme.spacing(1),
+  },
+  scrollTo: {
+    // position: 'relative',
+  }
 }))
 
 const MessageList = () => {
   const [isScrollButtonVisible, setIsScrollButtonVisible] = useState({display: 'none'})
   const { chatStore, userStore } = useContext(Context)
+  const chats = chatStore.chats
   const classes = useStyles()
 
   const scrollTo = useRef()
   const messageList = useRef()
+
+  const scrollHandler = () => {
+      const target = scrollTo.current
+      const rect = target.getBoundingClientRect()
+      const viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight)
+
+      if ((rect.bottom < 0 || rect.top - viewHeight >= 0)) {
+        target.scrollIntoView({
+          block: 'end',
+          behavior: 'smooth'
+        })
+      }
+  }
+
+  useEffect(() => {
+    const target = scrollTo.current
+    target.scrollIntoView({
+      block: 'end',
+      behavior: 'smooth'
+    })
+
+
+  }, [chats])
 
   useEffect(() => {
     const listener = () => {
@@ -45,11 +78,11 @@ const MessageList = () => {
       const rect = target.getBoundingClientRect()
       const viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight)
 
-      // if ((rect.bottom < 0 || rect.top - viewHeight >= 0)) {
-      //   setIsScrollButtonVisible({display: 'inline-block'})
-      // } else {
-      //   setIsScrollButtonVisible({display: 'none'})
-      // }
+      if ((rect.bottom < 0 || rect.top - viewHeight >= 0)) {
+        setIsScrollButtonVisible({display: 'inline-block'})
+      } else {
+        setIsScrollButtonVisible({display: 'none'})
+      }
     }
 
     messageList.current.addEventListener('scroll', listener)
@@ -66,6 +99,7 @@ const MessageList = () => {
 
     return chatStore.getCurrentChatMessages.map(message => (
       <Paper
+        key={message._id}
         className={clsx(
           classes.paper,
           message.author === userStore.user.id
@@ -73,10 +107,7 @@ const MessageList = () => {
             : classes.alignLeft
         )}
       >
-        <Message
-          key={message._id}
-          message={message}
-        />
+        <Message message={message}/>
       </Paper>
     ))
   }
@@ -87,15 +118,14 @@ const MessageList = () => {
           ref={messageList}
     >
       {renderMessageList()}
-      <IconButton aria-label="delete" className={classes.margin} size="small">
+      <IconButton
+        onClick={scrollHandler}
+        className={classes.scrollButton}
+        style={isScrollButtonVisible}
+        size="medium"
+      >
         <ArrowDownwardIcon fontSize="inherit" />
       </IconButton>
-        <button
-          // onClick={handleScroll}
-          // style={isScrollButtonVisible}
-          className={classes.scrollButton}
-        ><ArrowDownwardIcon/>
-        </button>
       <div ref={scrollTo}/>
     </Grid>
   )

@@ -83,7 +83,7 @@ function Message ({ message }) {
   // console.log(toJS(chatStore.getCurrentChatMessages))
 
   return (
-    <div >
+    <>
       <div>
         {message.content}
       </div>
@@ -125,7 +125,7 @@ function Message ({ message }) {
       {/*/>*/}
       {/*  </div>*/}
       {/*</div>*/}
-    </div>
+    </>
   )
 }
 
