@@ -8,7 +8,39 @@ const bcrypt = require('bcrypt')
 const uuid = require('uuid')
 
 class UserService {
-  async signUp (email, password) {
+  async getAllUsers() {
+    const data = await UserModel.find()
+    if (+data.length === 0) {
+      return { users: 'No users' }
+    }
+    const users = data.map(user => new UserDTO(user))
+
+    return {users}
+  }
+
+  async getUser(id) {
+    const data = await UserModel.findOne({_id: id})
+    if (!data) {
+      throw ApiError.badRequest('Пользователь не найден')
+    }
+    const user =  new UserDTO(data)
+
+    return {user}
+  }
+
+  async updateUser(values, id) {
+    const filter = {_id: id}
+    const options = {new: true}
+    const data = await UserModel.findOneAndUpdate(filter, values, options)
+    if (!data) {
+      throw ApiError.badRequest('Пользователь не найден')
+    }
+    const user =  new UserDTO(data)
+
+    return {user}
+  }
+
+  async signUp (firstName, lastName, email, password) {
     const candidate = await UserModel.findOne({ email })
     if (candidate) {
       throw ApiError.badRequest('Email exists.')
@@ -18,6 +50,8 @@ class UserService {
     const activationLink = uuid.v4()
 
     const user = await UserModel.create({
+      firstName,
+      lastName,
       email,
       password: passwordHash,
       activationLink

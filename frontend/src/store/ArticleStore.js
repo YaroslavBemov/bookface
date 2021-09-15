@@ -1,8 +1,8 @@
 import { makeAutoObservable } from 'mobx'
 
 export default class ArticleStore {
+  articles = []
   rootStore
-  article = 'Article'
 
   constructor (rootStore) {
     makeAutoObservable(this)

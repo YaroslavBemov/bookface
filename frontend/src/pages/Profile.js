@@ -1,16 +1,31 @@
-import React, { useContext } from 'react'
-import { Context } from '../index'
+import React from 'react'
+
+import ProfileInfo from '../components/Profile/ProfileInfo'
+import ProfileDetails from '../components/Profile/ProfileDetails'
+
+import { Box, Grid } from '@material-ui/core'
 
 const Profile = () => {
-  const {userStore} = useContext(Context)
-  console.log(userStore)
 
   return (
-    <div>
-      <h1>Profile</h1>
-      <h2>Email: {userStore.user.email}</h2>
-      <h3>Activated: {userStore.user.isActivated + ''}</h3>
-    </div>
+    <>
+      <Box
+        sx={{
+          backgroundColor: 'background.default',
+          minHeight: '100%',
+          py: 3
+        }}
+      >
+        <Grid container spacing={3}>
+          <Grid item lg={4} md={6} xs={12}>
+            <ProfileInfo/>
+          </Grid>
+          <Grid item lg={8} md={6} xs={12}>
+            <ProfileDetails/>
+          </Grid>
+        </Grid>
+      </Box>
+    </>
   )
 }
 
