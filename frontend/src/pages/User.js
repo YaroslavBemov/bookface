@@ -1,35 +1,29 @@
+import { useContext, useEffect } from 'react'
+import { observer } from 'mobx-react-lite'
+import { Context } from '../index'
+
 import {
   Avatar,
   Box,
   Card,
   CardContent,
   CircularProgress,
-  Typography
+  Typography,
+  makeStyles
 } from '@material-ui/core'
-import { useContext, useEffect } from 'react'
-import { Context } from '../index'
-import { makeStyles } from '@material-ui/core/styles'
-import { observer } from 'mobx-react-lite'
-//
-// const user = {
-//   avatar: '/static/images/avatars/avatar_6.png',
-//   city: 'Los Angeles',
-//   country: 'USA',
-//   jobTitle: 'Senior Developer',
-//   name: 'Katarina Smith',
-//   timezone: 'GTM-7'
-// }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     marginTop: '20px'
   }
 }))
 
-const ProfileInfo = ({match}) => {
-  const {usersStore} = useContext(Context)
+const ProfileInfo = ({ match }) => {
+  const { usersStore } = useContext(Context)
   const id = match.params.id
   const classes = useStyles()
+
+  const fullName = usersStore.user.firstName + ' ' + usersStore.user.lastName
 
   useEffect(() => {
     usersStore.getUser(id)
@@ -37,7 +31,7 @@ const ProfileInfo = ({match}) => {
 
   const renderUser = () => {
     if (usersStore.isLoading) return <CircularProgress/>
-    if (usersStore.isErrors) return <div>Error...</div>
+    if (usersStore.isError) return <div>User error...</div>
 
     return (
       <Card
@@ -63,32 +57,10 @@ const ProfileInfo = ({match}) => {
               gutterBottom
               variant="h3"
             >
-              {usersStore.user.firstName} {usersStore.user.lastName}
+              {fullName}
             </Typography>
-            {/*<Typography*/}
-            {/*  color="textSecondary"*/}
-            {/*  variant="body1"*/}
-            {/*>*/}
-            {/*  {`${usersStore.user.city} ${usersStore.user.country}`}*/}
-            {/*</Typography>*/}
-            {/*<Typography*/}
-            {/*  color="textSecondary"*/}
-            {/*  variant="body1"*/}
-            {/*>*/}
-            {/*  Date time*/}
-            {/*</Typography>*/}
           </Box>
         </CardContent>
-        {/*<Divider/>*/}
-        {/*<CardActions>*/}
-        {/*  <Button*/}
-        {/*    color="primary"*/}
-        {/*    fullWidth*/}
-        {/*    variant="text"*/}
-        {/*  >*/}
-        {/*    Upload picture*/}
-        {/*  </Button>*/}
-        {/*</CardActions>*/}
       </Card>
     )
   }

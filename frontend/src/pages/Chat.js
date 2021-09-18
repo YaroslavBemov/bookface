@@ -165,7 +165,6 @@ const Chat = () => {
           key={message._id}
           message={message}
 
-
         />
       </Paper>
     ))

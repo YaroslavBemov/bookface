@@ -1,11 +1,13 @@
 import React, { useContext, useEffect } from 'react'
-import { Box, CircularProgress, Container, Grid } from '@material-ui/core'
-import UsersList from '../components/UsersList'
-import { Context } from '../index'
 import { observer } from 'mobx-react-lite'
+import { Context } from '../index'
+
+import UsersItem from '../components/UsersItem'
+
+import { Box, CircularProgress, Container, Grid } from '@material-ui/core'
 
 const Users = () => {
-  const {usersStore, chatStore} = useContext(Context)
+  const { usersStore, chatStore } = useContext(Context)
 
   useEffect(() => {
     usersStore.getUsers()
@@ -13,13 +15,13 @@ const Users = () => {
   }, [usersStore, chatStore])
 
   const renderUsers = () => {
-    if (usersStore.isLoading) return <CircularProgress />
+    if (usersStore.isLoading) return <CircularProgress/>
     if (usersStore.noUsers) return <div>No users.</div>
-    if (usersStore.isErrors) return <div>Error...</div>
+    if (usersStore.isError) return <div>Users error...</div>
 
     return usersStore.getUsersList.map(user => (
       <Grid key={user.id} item md={12} xs={12}>
-        <UsersList user={user}/>
+        <UsersItem user={user}/>
       </Grid>
     ))
   }
@@ -33,10 +35,7 @@ const Users = () => {
           py: 3
         }}
       >
-        <Grid
-          container
-          spacing={3}
-        >
+        <Grid container spacing={3}>
           {renderUsers()}
         </Grid>
       </Box>

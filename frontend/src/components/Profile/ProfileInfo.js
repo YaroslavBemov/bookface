@@ -1,3 +1,7 @@
+import { useContext } from 'react'
+import { observer } from 'mobx-react-lite'
+import { Context } from '../../index'
+
 import {
   Avatar,
   Box,
@@ -8,14 +12,9 @@ import {
   Divider,
   Typography
 } from '@material-ui/core'
-import { useContext } from 'react'
-import { Context } from '../../index'
-import { observer } from 'mobx-react-lite'
-
 
 const ProfileInfo = () => {
-  const {userStore} = useContext(Context)
-
+  const { userStore } = useContext(Context)
 
   return (
     <Card>
@@ -48,18 +47,6 @@ const ProfileInfo = () => {
           >
             {userStore.user.lastName}
           </Typography>
-          {/*<Typography*/}
-          {/*  color="textSecondary"*/}
-          {/*  variant="body1"*/}
-          {/*>*/}
-          {/*  {`${user.city} ${user.country}`}*/}
-          {/*</Typography>*/}
-          {/*<Typography*/}
-          {/*  color="textSecondary"*/}
-          {/*  variant="body1"*/}
-          {/*>*/}
-          {/*  Date time*/}
-          {/*</Typography>*/}
         </Box>
       </CardContent>
       <Divider/>

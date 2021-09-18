@@ -7,7 +7,7 @@ export default class ChatStore {
   noChats = false
   currentChatId = ''
   isLoading = false
-  isErrors = false
+  isError = false
   isFetched = false
 
   constructor (rootStore) {
@@ -24,12 +24,12 @@ export default class ChatStore {
       } else {
         this.setChats(response)
         this.setNoChats(false)
-        this.setErrors(false)
+        this.setError(false)
         this.setIsFetched(true)
       }
     } catch (e) {
       console.log(e)
-      this.setErrors(true)
+      this.setError(true)
     } finally {
       this.setLoading(false)
     }
@@ -42,10 +42,10 @@ export default class ChatStore {
       const response = await ChatService.addChat(withId, withName, content)
       runInAction(() => {this.chats.push(response)})
       this.setNoChats(false)
-      this.setErrors(false)
+      this.setError(false)
     } catch (e) {
       console.log(e)
-      this.setErrors(true)
+      this.setError(true)
     } finally {
       this.setLoading(false)
     }
@@ -64,6 +64,13 @@ export default class ChatStore {
     }
   }
 
+  getChatIdWithUser (id) {
+    const result = this.getChatList.map(chat => {
+      return chat.party.find(el => el.id === id)
+    })
+    return result.length > 0 ? result[0].id : null
+  }
+
   get getChatList () {
     if (this.isChats) {
       const userId = this.rootStore.userStore.user.id
@@ -75,13 +82,6 @@ export default class ChatStore {
       })
     }
     return []
-  }
-
-  getChatIdWithUser (id) {
-    const result = this.getChatList.map(chat => {
-      return chat.party.find(el => el.id === id)
-    })
-    return result.length > 0 ? result[0].id : null
   }
 
   get isChats () {
@@ -107,8 +107,8 @@ export default class ChatStore {
     this.isLoading = bool
   }
 
-  setErrors (bool) {
-    this.isErrors = bool
+  setError (bool) {
+    this.isError = bool
   }
 
   setChats (chats) {
